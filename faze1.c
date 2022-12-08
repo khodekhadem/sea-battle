@@ -20,7 +20,7 @@ void printer(int *p,int n){
     for(int i=0;i<n;i++){
         for (int j = 0; j < n; j++)
         {
-            printf("%d",*p++);
+            printf("%c",*p++);
         }
         printf("\n");
     }
@@ -37,12 +37,12 @@ void printer(int *p,int n){
 int main(){
     int n,tmpx,tmpy;
     scanf("%d",&n);
-    int board[n][n];
+    char board[n][n];
     
     for(int i=0;i<n;i++){
         for (int j = 0; j < n; j++)
         {
-            board[i][j]=0;
+            board[i][j]="~";
         }
     }
 
