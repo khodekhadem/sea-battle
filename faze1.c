@@ -15,9 +15,12 @@ int faz1(int *p,int n){
 
 
 }
-void printer(int *p,int n){
-
+void printer(char *p,int n){
+    printf("@");
+    for(int i=0;i<n;i++){printf("%d",i);}
+    printf("\n"); 
     for(int i=0;i<n;i++){
+        printf("%d",i);
         for (int j = 0; j < n; j++)
         {
             printf("%c",*p++);
@@ -42,7 +45,7 @@ int main(){
     for(int i=0;i<n;i++){
         for (int j = 0; j < n; j++)
         {
-            board[i][j]="~";
+            board[i][j]='~';
         }
     }
 
@@ -52,7 +55,7 @@ int main(){
 
     for(int i=0;i<3;i++){
         scanf("%d%d",&tmpx,&tmpy);
-        board[tmpx][tmpy]=2;
+        board[tmpx][tmpy]='*';
     }
     printer(&board[0][0],n);
     //faz1(&board[0][0],n);
