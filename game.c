@@ -20,26 +20,27 @@ like this
 9~~~~~~~~~~         9~~~~~~~~~~
 
 */
+//updated for maps greater than 10
 void printer(char *p1,char *p2,int n){
     system("clear");
     system("figlet sea-battle");
-    printf("@");
-    for(int i=0;i<n;i++){printf("%d",i);}
-    printf("         @");
-    for(int i=0;i<n;i++){printf("%d",i);}
+    printf("  ");
+    for(int i=0;i<n;i++){printf("%d ",i);if(i<10){printf(" ");}}
+    printf("           ");
+    for(int i=0;i<n;i++){printf("%d ",i);if(i<10){printf(" ");}}
     printf("\n"); 
     for(int i=0;i<n;i++){
-        printf("%d",i);
+        if(i<10){printf(" ");}printf("%d",i);
         for (int j = 0; j < n; j++)
         {
-            printf("%c",*p1++);
+            printf("%c  ",*p1++);
         }
         printf("         ");
-        printf("%d",i);
+        if(i<10){printf(" ");}printf("%d",i);
         
         for (int j = 0; j < n; j++)
         {
-            printf("%c",*p2++);
+            printf("%c  ",*p2++);
         }
         printf("\n");
     }
