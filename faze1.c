@@ -1,5 +1,5 @@
 // it is faze 1
-// this game is optimized under 9*9 map
+// this game is optimized up to 26*26 map
 
 /*
     in faze 1 we only get 3 point of map and highlight them
@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 #define VER_BORDER '|'
 #define HOR_BORDER '-'
@@ -23,47 +24,63 @@
 // return number by char
 #define rnbt(ch) ch - 64
 
+// erase to end of line
+#define erase_line "\33[K"
+
+// move cursor one line up
+#define mv_cur_up "\33[A"
+
+#ifdef __linux__
+#if __linux__
+// f:forground - b:background
+#define b_blue "\033[104m"
+#define f_darkblue "\033[34m"
+#define b_white "\033[107m"
+#define f_black "\033[30m"
+#define f_darkred "\033[31m"
+#define f_darkyellow "\033[33m"
+#define color_reset "\033[0m"
+#endif
+#endif
+
+#ifdef _WIN32
+#if _WIN32
+// f:forground - b:background
+#define b_blue ""
+#define f_darkblue ""
+#define b_white ""
+#define f_black ""
+#define f_darkred ""
+#define f_darkyellow ""
+#define color_reset ""
+#endif
+#endif
+
+const char *guide = "\033[34m\033[101mSEA\033[31m\033[104mBATTLE\033[0m\n\n"
+                    "Hello.please READ it carefully\n"
+                    "1st : write demension of board\n"
+                    "2nd : for each user write first number of ships\n"
+                    "      and then position of explosion place in form of <num> <char>\n"
+                    "e.g. : 1 A\n"
+                    "some ruls :\n"
+                    "1) max of demension is 26 => 1-26 & A-Z\n\n"
+                    "press any key to continue...";
+
+/*
+    error -> f_darkyellow
+    pointers -> b_white , f_black
+    water -> b_blue , f_darkblue
+    exploied place -> b_blue , f_darkred
+*/
+
 void board_creator(char *board, int size)
 {
-    char characters[27] = "ABCDEFGHI";
-    int numbers = 1;
-
     // water
-    for (int i = 2; i < size - 1; i++)
+    for (int i = 0; i < size; i++)
     {
-        for (int j = 2; j < size - 1; j++)
+        for (int j = 0; j < size; j++)
         {
             pos(board, i, j, size) = '~';
-        }
-    }
-
-    // chars
-    for (int j = 2; j < size - 1; j++)
-    {
-        pos(board, 0, j, size) = characters[j - 2];
-    }
-
-    // nums
-    for (int i = 2; i < size - 1; i++)
-    {
-        pos(board, i, 0, size) = numbers + 48;
-
-        ++numbers;
-    }
-
-    // border
-    for (int i = 1; i < size; i++)
-    {
-        for (int j = 1; j < size; j++)
-        {
-            if ((i == 1 || i == size - 1) && (1 < j) && (j < size - 1))
-            {
-                pos(board, i, j, size) = HOR_BORDER;
-            }
-            else if ((j == 1 || j == size - 1) && (1 < i) && (i < size - 1))
-            {
-                pos(board, i, j, size) = VER_BORDER;
-            }
         }
     }
 }
@@ -78,28 +95,70 @@ void loop_print_space(int num)
 
 void print_border(char *map1, char *map2, int size)
 {
-    printf(" ##FOCP1");
-    loop_print_space(SPACE + size + size - 1 - 5); // we have $SPACE space between 2 tables
+    char characters[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // contains \0
+    int i_temp;
+
+    printf("##FOCP1");
+    loop_print_space(SPACE + size + size + 2 - 7); // we have $SPACE space between 2 tables
     printf("##FOCP2\n\n");
+
+    // j index pointer < start
+
+    printf("   ");
 
     for (int i = 0; i < size; i++)
     {
-        for (int j = 0; j < (2 * size) + SPACE; j++)
-        {
-            if (j < size)
-            {
-                printf("%c", pos(map1, i, j, size));
+        printf("%s%s%c %s", b_white, f_black, characters[i], color_reset);
+    }
 
-                if (j != size - 1)
+    loop_print_space(SPACE + 1);
+
+    printf(" ");
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("%s%s%c %s", b_white, f_black, characters[i], color_reset);
+    }
+
+    printf("\n");
+
+    // j index pointer end >
+
+    for (int i = 0; i < size; i++)
+    {
+        i_temp = i + 1;
+
+        for (int j = -1; j < (2 * size) + SPACE; j++)
+        {
+            if (j == -1)
+            {
+                printf("%s%s%2d %s", b_white, f_black, i_temp, color_reset);
+            }
+            else if (j == size + SPACE - 1)
+            {
+                printf("%s%s%2d %s", b_white, f_black, i_temp, color_reset);
+            }
+            else if (j < size)
+            {
+                if (pos(map1, i, j, size) == '~')
                 {
-                    printf(" ");
+                    printf("%s%s~ %s", b_blue, f_darkblue, color_reset);
+                }
+                else
+                {
+                    printf("%s%sX %s", b_blue, f_darkred, color_reset);
                 }
             }
             else if (j >= size + SPACE)
             {
-                printf("%c", pos(map2, i, j - (size + SPACE), size));
-
-                printf(" ");
+                if (pos(map2, i, j - (size + SPACE), size) == '~')
+                {
+                    printf("%s%s~ %s", b_blue, f_darkblue, color_reset);
+                }
+                else
+                {
+                    printf("%s%sX %s", b_blue, f_darkred, color_reset);
+                }
             }
             else
             {
@@ -113,105 +172,181 @@ void print_border(char *map1, char *map2, int size)
 
 int main()
 {
+    system("clear");
+
     int n;
     int ship_num; // hasn't usage now
-    int focp1_i_indexes[3];
-    char focp1_j_indexes[3];
-    int focp2_i_indexes[3];
-    char focp2_j_indexes[3];
-    int i_temp;
-    int j_temp;
+    int i_index;
+    char j_index;
+    int check = 0;
+    int turn = 0;
+
+    printf("%s", guide);
+
+    while (!getchar())
+    {
+    };
+
+    system("clear");
 
     printf("please write size of map\n");
 
     scanf("%d", &n);
 
-    while (n < 1 || 9 < n)
+    while (n < 1 || 26 < n)
     {
-        printf("your number either lower than 0 or grather than 9 --- please write it again\n");
+        printf("%s!!!your number either lower than 0 or grather than 26 --- please write it again%s\n", f_darkyellow, color_reset);
         scanf("%d", &n);
-    }
 
-    printf("\n");
-
-    printf("please insert focp1 and then focp2\n");
-    printf("please first write number of ships and then position of them seperatly\n");
-    printf("for position do this template <num> <capital char>\n\n");
-
-    // focp1
-    scanf("%d", &ship_num);
-
-    for (int k = 0; k < 3; k++)
-    {
-        scanf("%d %c", &focp1_i_indexes[k], &focp1_j_indexes[k]);
-
-        while (focp1_i_indexes[k] < 1 || focp1_i_indexes[k] > n)
-        {
-            printf("error : i is wrong --- please write it again(only i)\n");
-            scanf("%d", &focp1_i_indexes[k]);
-        }
-        while (focp1_j_indexes[k] < 65 || focp1_j_indexes[k] >= 65 + n)
-        {
-            printf("error : j is wrong --- please write it again(only j)\n");
-            scanf("%c", &focp1_j_indexes[k]);
-        }
-    }
-
-    printf("\n\n------\n\n");
-
-    // focp2
-    scanf("%d", &ship_num);
-
-    for (int k = 0; k < 3; k++)
-    {
-        scanf("%d %c", &focp2_i_indexes[k], &focp2_j_indexes[k]);
-
-        while (focp1_i_indexes[k] < 1 || focp1_i_indexes[k] > n)
-        {
-            printf("error : i is wrong --- please write it again(only i)\n");
-            scanf("%d", &focp1_i_indexes[k]);
-        }
-        while (focp1_j_indexes[k] < 65 || focp1_j_indexes[k] > 65 + n)
-        {
-            printf("error : j is wrong --- please write it again(only j)\n");
-            scanf("%c", &focp1_j_indexes[k]);
-        }
+        printf("%s%s", mv_cur_up, erase_line);
+        printf("%s%s", mv_cur_up, erase_line);
     }
 
     system("clear");
 
-    char focp1_board[n + 3][n + 3]; // has border + index pointer
-    char focp2_board[n + 3][n + 3]; // has border + index pointer
+    char focp1_board[n][n];
+    char focp2_board[n][n];
 
-    for (int i = 0; i < n + 3; i++)
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n + 3; j++)
+        for (int j = 0; j < n; j++)
         {
             focp1_board[i][j] = ' ';
             focp2_board[i][j] = ' ';
         }
     }
 
-    board_creator(&focp1_board[0][0], n + 3);
-    board_creator(&focp2_board[0][0], n + 3);
+    board_creator(&focp1_board[0][0], n);
+    board_creator(&focp2_board[0][0], n);
+
+    print_border(&focp1_board[0][0], &focp2_board[0][0], n);
+
+    printf("\n");
+
+    // focp1
+    printf("FOCP1 :\n\n");
+
+    printf("please write number of ships\n");
+
+    scanf("%d", &ship_num);
+
+    printf("%s%s", mv_cur_up, erase_line);
+    printf("%s%s", mv_cur_up, erase_line);
+
+    printf("please write positions in this template <number> <character>\n");
 
     for (int k = 0; k < 3; k++)
     {
-        i_temp = true_i(focp1_i_indexes[k]);
-        j_temp = true_j(rnbt(focp1_j_indexes[k]));
+        scanf("%d %c", &i_index, &j_index);
 
-        focp1_board[i_temp][j_temp] = 'x';
+        while (i_index < 1 || i_index > n)
+        {
+            check = 1;
+            ++turn;
+
+            printf("%s!!!error : input is wrong --- please write it again%s\n", f_darkyellow, color_reset);
+            scanf("%d %c", &i_index, &j_index);
+
+            printf("%s%s", mv_cur_up, erase_line);
+            printf("%s%s", mv_cur_up, erase_line);
+
+            if (turn == 1)
+            {
+                printf("%s%s", mv_cur_up, erase_line);
+            }
+        }
+
+        while (j_index < 65 || j_index >= 65 + n)
+        {
+            check = 1;
+            ++turn;
+
+            printf("%s!!!error : input is wrong --- please write it again\n%s", f_darkyellow, color_reset);
+            scanf("%d %c", &i_index, &j_index);
+
+            printf("%s%s", mv_cur_up, erase_line);
+            printf("%s%s", mv_cur_up, erase_line);
+
+            if (turn == 1)
+            {
+                printf("%s%s", mv_cur_up, erase_line);
+            }
+        }
+
+        if (!check)
+        {
+            printf("%s%s", mv_cur_up, erase_line);
+        }
+
+        focp1_board[true_i(i_index)][true_j(rnbt(j_index))] = 'X';
     }
+
+    // focp2
+    printf("%s%s", mv_cur_up, erase_line);
+    printf("%s%s", mv_cur_up, erase_line);
+    printf("%s%s", mv_cur_up, erase_line);
+
+    check = 0;
+
+    printf("FOCP2 :\n\n");
+
+    printf("please write number of ships\n");
+
+    scanf("%d", &ship_num);
+
+    printf("%s%s", mv_cur_up, erase_line);
+    printf("%s%s", mv_cur_up, erase_line);
+
+    printf("please write positions in this template <number> <character>\n");
 
     for (int k = 0; k < 3; k++)
     {
-        i_temp = true_i(focp2_i_indexes[k]);
-        j_temp = true_j(rnbt(focp2_j_indexes[k]));
+        scanf("%d %c", &i_index, &j_index);
 
-        focp2_board[i_temp][j_temp] = 'x';
+        while (i_index < 1 || i_index > n)
+        {
+            check = 1;
+            ++turn;
+
+            printf("%s!!!error : input is wrong --- please write it again%s\n", f_darkyellow, color_reset);
+            scanf("%d", &i_index);
+
+            printf("%s%s", mv_cur_up, erase_line);
+            printf("%s%s", mv_cur_up, erase_line);
+
+            if (turn == 1)
+            {
+                printf("%s%s", mv_cur_up, erase_line);
+            }
+        }
+        while (j_index < 65 || j_index > 65 + n)
+        {
+            check = 1;
+            ++turn;
+
+            printf("%s!!!error : input is wrong --- please write it again%s\n", f_darkyellow, color_reset);
+            scanf("%c", &j_index);
+
+            printf("%s%s", mv_cur_up, erase_line);
+            printf("%s%s", mv_cur_up, erase_line);
+
+            if (turn == 1)
+            {
+                printf("%s%s", mv_cur_up, erase_line);
+            }
+        }
+
+        if (!check)
+        {
+            printf("%s%s", mv_cur_up, erase_line);
+        }
+
+        focp2_board[true_i(i_index)][true_j(rnbt(j_index))] = 'X';
     }
 
-    print_border(&focp1_board[0][0], &focp2_board[0][0], n + 3);
+    system("clear");
+
+    print_border(&focp1_board[0][0], &focp2_board[0][0], n);
 
     return 0;
 }
