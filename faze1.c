@@ -11,8 +11,6 @@
 #include <unistd.h>
 #include <string.h>
 
-#define VER_BORDER '|'
-#define HOR_BORDER '-'
 #define SPACE 10
 
 // no. of columns = colN => arr[row][col] = *(arr + ((row * colN) + col))
