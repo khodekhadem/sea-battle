@@ -1,5 +1,10 @@
 // it is faze 1
-//this game is optimized for under 10*10 maps
+// this game is optimized under 9*9 map
+
+/*
+    in faze 1 we only get 3 point of map and highlight them
+    then we print the boarder
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +20,7 @@
 #define true_i(i) i + 1
 #define true_j(j) j + 1
 
-// return_number_by_char
+// return number by char
 #define rnbt(ch) ch - 64
 
 void board_creator(char *board, int size)
@@ -73,7 +78,7 @@ void loop_print_space(int num)
 
 void print_border(char *map1, char *map2, int size)
 {
-    printf("##FOCP1");
+    printf(" ##FOCP1");
     loop_print_space(SPACE + size + size - 1 - 5); // we have $SPACE space between 2 tables
     printf("##FOCP2\n\n");
 
@@ -121,6 +126,12 @@ int main()
 
     scanf("%d", &n);
 
+    while (n < 1 || 9 < n)
+    {
+        printf("your number either lower than 0 or grather than 9 --- please write it again\n");
+        scanf("%d", &n);
+    }
+
     printf("\n");
 
     printf("please insert focp1 and then focp2\n");
@@ -139,7 +150,7 @@ int main()
             printf("error : i is wrong --- please write it again(only i)\n");
             scanf("%d", &focp1_i_indexes[k]);
         }
-        while (focp1_j_indexes[k] < 65 || focp1_j_indexes[k] > 65 + n)
+        while (focp1_j_indexes[k] < 65 || focp1_j_indexes[k] >= 65 + n)
         {
             printf("error : j is wrong --- please write it again(only j)\n");
             scanf("%c", &focp1_j_indexes[k]);
@@ -168,7 +179,6 @@ int main()
     }
 
     system("clear");
-    sleep(1);
 
     char focp1_board[n + 3][n + 3]; // has border + index pointer
     char focp2_board[n + 3][n + 3]; // has border + index pointer
