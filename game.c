@@ -1,7 +1,8 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<stdlib.h>
+
 #include <ctype.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
 
 //printing two 2d arr beside each other by pointers
 /*
@@ -99,7 +100,47 @@ void get_boats(char *p,int n,int boatsNumber,char *empt,int player){
     
 
 }
+void fight(char *boardp1,char *boardp2,char *boatp1,char *boatp2, char n,int boatsNumber){
+    int sw =1,tmpx=0,tmpy=0 , p1point=0,p2point=0; 
+    char tmpc;
+    printf("\n");
+    while(sw==1){
+        do{
+            printer(boardp1-n-1,boardp2-n-1,n);
+            printf("player 1 enter a location -->\n");scanf("%d%d",&tmpx,&tmpy);
+            //tmpc = *(boatp2+(n*tmpx)+tmpy);
+            if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy){
+                tmpc = *(boatp2+(n*tmpx)+tmpy);
+                if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';p1point++;}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
+                break;
+            }
+            //if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
+            
+        }while(1==1);
+        if(p1point >= boatsNumber*3){system("clear"),system("figlet p1_won_!!");break;}
+        
+        do{
+            printer(boardp1-n-1,boardp2-n-1,n);
+            printf("player 2 enter a location -->\n");scanf("%d%d",&tmpx,&tmpy);
+            //tmpc = *(boatp2+(n*tmpx)+tmpy);
+            if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy){
+                tmpc = *(boatp1+(n*tmpx)+tmpy);
+                if(tmpc == '@'){*(boardp1+(n*tmpx)+tmpy) = '@';p2point++;}else{*(boardp1+(n*tmpx)+tmpy) = '*';}
+                break;
+            }
+            //if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
+            
+        }while(1==1);
+        if(p2point >= boatsNumber*3){system("clear"),system("figlet p2_won_!!");break;}
 
+
+
+         //*(boardp2+(n*tmpx)+tmpy) = '*';
+        printer(boardp1-n-1,boardp2-n-1,n);
+        
+        //printf("%c",*(boatp2+(n*tmpx)+tmpy)); 
+    }
+}
 
 
 
@@ -107,17 +148,17 @@ int main(){
     int n,tmpx,tmpy,boatsNumber;
     printf("enter board size:");scanf("%d",&n);
     printf("how many boats do we have? ");scanf("%d",&boatsNumber);
-    char boardp1[n][n];
-    char boardp2[n][n];
+    char boardp1[n+2][n+2];
+    char boardp2[n+2][n+2];
     char boatp1[n+2][n+2];
     char boatp2[n+2][n+2];
     char emptboard[n+2][n+2];
     char tmpc;
-
+    
     fill_board(&emptboard[0][0],n+2,'?');
     
-    fill_board(&boardp1[0][0],n,'~');    
-    fill_board(&boardp2[0][0],n,'~');
+    fill_board(&boardp1[0][0],n+2,'~');    
+    fill_board(&boardp2[0][0],n+2,'~');
 
     fill_board(&boatp1[0][0],n+2,'~');
     fill_board(&boatp2[0][0],n+2,'~');
@@ -127,22 +168,13 @@ int main(){
     get_boats(&boatp1[1][1],n+2,boatsNumber,&emptboard[0][0],1);
     
 
-    printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
+    system("figlet clearing");sleep(5);system("clear");//printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
     get_boats(&boatp2[1][1],n+2,boatsNumber,&emptboard[0][0],2);
-
+    system("figlet clearing");sleep(5);system("clear");//printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
+    
     printer(&boatp1[0][0],&boatp2[0][0],n+2);
 
 
-
-
-
-
-
-
-
-
-
-
-
+    fight(&boardp1[1][1],&boardp2[1][1],&boatp1[1][1],&boatp2[1][1],n+2,boatsNumber);
 
 return 0;}
