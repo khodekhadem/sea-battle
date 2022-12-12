@@ -35,7 +35,9 @@ then, move to the directory
     cd sea-battle
 
 execute the game.c
+
     gcc game.c -o game
+
 # run
 
 use this command
