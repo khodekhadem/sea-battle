@@ -107,7 +107,7 @@ void fight(char *boardp1,char *boardp2,char *boatp1,char *boatp2, char n,int boa
     while(sw==1){
         do{
             printer(boardp1-n-1,boardp2-n-1,n);
-            printf("player 1 enter a location -->\n");scanf("%d%d",&tmpx,&tmpy);
+            printf("player 1 enter a location -->\nex 7 7 or 10 4");scanf("%d%d",&tmpx,&tmpy);
             //tmpc = *(boatp2+(n*tmpx)+tmpy);
             if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy){
                 tmpc = *(boatp2+(n*tmpx)+tmpy);
@@ -121,7 +121,7 @@ void fight(char *boardp1,char *boardp2,char *boatp1,char *boatp2, char n,int boa
         
         do{
             printer(boardp1-n-1,boardp2-n-1,n);
-            printf("player 2 enter a location -->\n");scanf("%d%d",&tmpx,&tmpy);
+            printf("player 2 enter a location -->\nex 7 7 or 10 4");scanf("%d%d",&tmpx,&tmpy);
             //tmpc = *(boatp2+(n*tmpx)+tmpy);
             if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy){
                 tmpc = *(boatp1+(n*tmpx)+tmpy);
@@ -168,9 +168,9 @@ int main(){
     get_boats(&boatp1[1][1],n+2,boatsNumber,&emptboard[0][0],1);
     
 
-    system("figlet clearing");sleep(5);system("clear");//printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
+    system("figlet clearing");sleep(2);system("clear");//printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
     get_boats(&boatp2[1][1],n+2,boatsNumber,&emptboard[0][0],2);
-    system("figlet clearing");sleep(5);system("clear");//printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
+    system("figlet clearing");sleep(2);system("clear");//printf("enter any thing to claer\n");scanf(" %c",&tmpc);system("clear");//pres a key to clear
     
     printer(&boatp1[0][0],&boatp2[0][0],n+2);
 
