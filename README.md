@@ -6,7 +6,7 @@
 
 
 
-[![Requirements](https://img.shields.io/badge/Requirements-python3%20%2F%20git-blue)]()
+[![Requirements](https://img.shields.io/badge/Requirements-gcc%20%2F%20git-blue)]()
 
 
 
