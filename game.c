@@ -101,18 +101,27 @@ void get_boats(char *p,int n,int boatsNumber,char *empt,int player){
 
 }
 void fight(char *boardp1,char *boardp2,char *boatp1,char *boatp2, char n,int boatsNumber){
-    int sw =1,tmpx=0,tmpy=0 , p1point=0,p2point=0; 
+    int sw =1,tmpx=0,tmpy=0 , p1point=0,p2point=0,inp; 
     char tmpc;
     printf("\n");
     while(sw==1){
         do{
             printer(boardp1-n-1,boardp2-n-1,n);
-            printf("player 1 enter a location -->\nex 7 7 or 10 4");scanf("%d%d",&tmpx,&tmpy);
+            printf("player 1 enter a location -->\nex 7 7 a or 10 4 h ");inp = scanf("%d%d %c",&tmpx,&tmpy,&tmpc);
             //tmpc = *(boatp2+(n*tmpx)+tmpy);
-            if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy){
-                tmpc = *(boatp2+(n*tmpx)+tmpy);
-                if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';p1point++;}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
-                break;
+            if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy && inp == 3){
+                if(tmpc=='a'){
+                    tmpc = *(boatp2+(n*tmpx)+tmpy);
+                    if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';p1point++;}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
+                    break;
+                }
+                else if(tmpc=='h'){
+                    tmpc = *(boardp1+(n*tmpx)+tmpy);
+                    if(tmpc == '@'){*(boardp1+(n*tmpx)+tmpy) = '~';p2point--;}else{*(boardp1+(n*tmpx)+tmpy) = '~';}
+                    break;
+
+
+                }
             }
             //if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
             
@@ -121,12 +130,20 @@ void fight(char *boardp1,char *boardp2,char *boatp1,char *boatp2, char n,int boa
         
         do{
             printer(boardp1-n-1,boardp2-n-1,n);
-            printf("player 2 enter a location -->\nex 7 7 or 10 4");scanf("%d%d",&tmpx,&tmpy);
+            printf("player 2 enter a location -->\nex 7 7 a or 10 4 h ");inp = scanf("%d%d %c",&tmpx,&tmpy,&tmpc);
             //tmpc = *(boatp2+(n*tmpx)+tmpy);
-            if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy){
-                tmpc = *(boatp1+(n*tmpx)+tmpy);
-                if(tmpc == '@'){*(boardp1+(n*tmpx)+tmpy) = '@';p2point++;}else{*(boardp1+(n*tmpx)+tmpy) = '*';}
-                break;
+            if(tmpx<n && tmpy<n && 0<=tmpx && 0<=tmpy && inp==3){
+                if(tmpc=='a'){
+                    tmpc = *(boatp1+(n*tmpx)+tmpy);
+                    if(tmpc == '@'){*(boardp1+(n*tmpx)+tmpy) = '@';p2point++;}else{*(boardp1+(n*tmpx)+tmpy) = '*';}
+                    break;
+                }
+                else if(tmpc=='h'){
+                    tmpc = *(boardp2+(n*tmpx)+tmpy);
+                    if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '~';p1point--;}else{*(boardp2+(n*tmpx)+tmpy) = '~';}
+                    break;
+
+                }
             }
             //if(tmpc == '@'){*(boardp2+(n*tmpx)+tmpy) = '@';}else{*(boardp2+(n*tmpx)+tmpy) = '*';}
             
