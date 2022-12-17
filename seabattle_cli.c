@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 #define SPACE 10
 
 // no. of columns = colN => arr[row][col] = *(arr + ((row * colN) + col))
@@ -30,6 +34,12 @@
     water -> b_blue , f_darkblue
     exploied place -> b_blue , f_darkred
     ship -> b_purple , f_grey
+*/
+
+/*
+    water -> ~
+    ship -> 1 .. 9
+    exploied place -> X
 */
 
 int* call_cli(int turn, int *arg){

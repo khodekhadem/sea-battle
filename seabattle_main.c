@@ -1,4 +1,5 @@
 // optimize up to 52*52 board
+// optimize for windows and linux
 
 #include <stdio.h>
 #include <unistd.h>
@@ -10,12 +11,18 @@ extern void call_Rcli();
 extern void call_save();
 
 extern int is_ended;
+extern char *logo;
 
 int main()
 {
     char mode;
     int *cli_result;
     int *engine_result;
+
+    printf("%s",logo);
+
+    sleep(1);
+    system("clear");
 
     printf("'n' for new game and 's' for saved game and any other key for exit\n");
     scanf("%c", &mode);
