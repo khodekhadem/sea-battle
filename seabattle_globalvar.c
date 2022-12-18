@@ -7,12 +7,15 @@ char *board1;
 char *board2;
 
 //3D array -> makan keshtihaie bazikonan
-short *ships_pos_p1;
-short *ships_pos_p2;
+int *ships_pos_p1;
+int *ships_pos_p2;
 
 char p1_name[20];
 char p2_name[20];
 
 int board_size;
 
-int repair_num;
+int repair_num = 0;
+
+int p1_ship_num;
+int p2_ship_num;

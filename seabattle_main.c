@@ -4,45 +4,37 @@
 #include <stdio.h>
 #include <unistd.h>
 
-extern int* call_cli(int,int*);
-extern int* call_engine(int*);
+#ifdef __linux__
+#if __linux__
+#define cls "clear"
+#endif
+#endif
+
+#ifdef _WIN32
+#if _WIN32
+#define cls "cls"
+#endif
+#endif
+
+extern int *call_cli(int, int *);
+extern int *call_engine(int *);
 extern void call_Rfile();
 extern void call_Rcli();
-extern void call_save();
 
 extern int is_ended;
 extern char *logo;
 
 int main()
 {
-    char mode;
     int *cli_result;
     int *engine_result;
 
-    printf("%s",logo);
+    printf("%s", logo);
 
     sleep(1);
-    system("clear");
+    system(cls);
 
-    printf("'n' for new game and 's' for saved game and any other key for exit\n");
-    scanf("%c", &mode);
-    system("clear");
-
-    switch (mode)
-    {
-    case 'n':
-        call_Rcli();
-
-        break;
-
-    case 's':
-        call_Rfile();
-
-        break;
-
-    default:
-        return 0;
-    }
+    call_Rcli();
 
     cli_result = call_cli(0, NULL);
 
