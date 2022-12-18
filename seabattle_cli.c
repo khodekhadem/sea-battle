@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
 #define SPACE 10
 
 // no. of columns = colN => arr[row][col] = *(arr + ((row * colN) + col))
-#define pos(arr, row, col, colN) *(arr + ((row * colN) + col))
+#define pos(arr, row, col, colN) (*(arr + ((row * colN) + col)))
 
 // erase to end of line
 #define erase_line "\33[K"
@@ -55,15 +51,13 @@
 // attacker + pos_of_attack + command
 int *output;
 
-int *call_cli(int turn, int *arg)
-{
-    switch (turn)
-    {
-    case 1:
-        break;
+int *call_cli(int turn, int *arg) {
+    switch (turn) {
+        case 1:
 
-    case 0:
-        break;
+        case 0:
+        default:
+            break;
     }
 
     return output;

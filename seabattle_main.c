@@ -2,7 +2,9 @@
 // optimize for windows and linux
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include "sb_globvar.h"
 
 #ifdef __linux__
 #if __linux__
@@ -16,16 +18,14 @@
 #endif
 #endif
 
-extern int *call_cli(int, int *);
-extern int *call_engine(int *);
-extern void call_Rfile();
 extern void call_Rcli();
-
-extern int is_ended;
-extern char *logo;
+extern int* call_cli();
+extern int* call_engine();
 
 int main()
 {
+    system(cls);
+
     int *cli_result;
     int *engine_result;
 
