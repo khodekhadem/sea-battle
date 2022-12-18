@@ -21,7 +21,7 @@ void call_Rcli_gi () {
     system(cls);
 
     printf("write player1 name (max = 19 character) : ");
-    scanf("%s", p[player]->name);
+    scanf("%s", p1.name);
     printf("\nwrite player2 name (max = 19 character) : ");
     scanf("%s", p2.name);
 
