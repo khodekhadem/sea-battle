@@ -1,3 +1,3 @@
-int* call_engine(int *arg){
+void call_engine(int result, int arg[4]){
 
 }
