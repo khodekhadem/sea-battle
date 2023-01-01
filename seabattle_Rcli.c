@@ -81,52 +81,52 @@ void selector_creator(int selector[][2], int i, int j) {
     }
 }
 
-void move_selector(char mode, int selector[][2]) {
+void move_selector(char mode, int selector[][2], int len) {
     switch (mode) {
         case 'U':
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < len; i++) {
                 if (selector[i][0] - 1 == -1) {
                     return;
                 }
             }
-            for (int i = 0; i < 3; i++) {
-                --selector[i][0];
+            for (int i = 0; i < len; i++) {
+                selector[i][0]--;
             }
 
             break;
 
         case 'D':
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < len; i++) {
                 if (selector[i][0] + 1 == board_size) {
                     return;
                 }
             }
-            for (int i = 0; i < 3; i++) {
-                ++selector[i][0];
+            for (int i = 0; i < len; i++) {
+                selector[i][0]++;
             }
 
             break;
 
         case 'R':
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < len; i++) {
                 if (selector[i][1] + 1 == board_size) {
                     return;
                 }
             }
-            for (int i = 0; i < 3; i++) {
-                ++selector[i][1];
+            for (int i = 0; i < len; i++) {
+                selector[i][1]++;
             }
 
             break;
 
         case 'L':
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < len; i++) {
                 if (selector[i][1] - 1 == -1) {
                     return;
                 }
             }
-            for (int i = 0; i < 3; i++) {
-                --selector[i][1];
+            for (int i = 0; i < len; i++) {
+                selector[i][1]--;
             }
 
             break;
@@ -135,8 +135,9 @@ void move_selector(char mode, int selector[][2]) {
 
 void put_ship(int player, int selector[][2]) {
     static int ship_no = 1;
+    static int last_player = 0;
 
-    if (player == 1) {
+    if (player != last_player) {
         ship_no = 1;
     }
 
@@ -145,15 +146,30 @@ void put_ship(int player, int selector[][2]) {
     }
 
     ++ship_no;
+
+    last_player = player;
 }
 
 void selector_to_ships_places(int player, int selector[][2]) {
     static int ship_no = 0;
+    static int last_player = 0;
+    int i;
 
-    for (int i = 0; i < 3; ++i) {
+    if (player != last_player) {
+        ship_no = 0;
+    }
+
+    for (i = 0; i < 3; ++i) {
         p[player]->ships_places[ship_no][i][0] = selector[i][0];
         p[player]->ships_places[ship_no][i][1] = selector[i][1];
     }
+
+    p[player]->ships_places[ship_no][i][0] = -1;
+    p[player]->ships_places[ship_no][i][1] = -1;
+
+    ++ship_no;
+
+    last_player = player;
 }
 
 int is_another_ship_available(int player, int selector[][2]) {
@@ -203,22 +219,22 @@ void ship_creator(int player) {
 
         switch (getch()) {
             case UP:
-                move_selector('U', selector);
+                move_selector('U', selector, 3);
 
                 break;
 
             case DOWN:
-                move_selector('D', selector);
+                move_selector('D', selector, 3);
 
                 break;
 
             case RIGHT:
-                move_selector('R', selector);
+                move_selector('R', selector, 3);
 
                 break;
 
             case LEFT:
-                move_selector('L', selector);
+                move_selector('L', selector, 3);
 
                 break;
 

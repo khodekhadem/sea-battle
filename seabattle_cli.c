@@ -3,24 +3,24 @@
 /*
     indexes , player info -> b_white , f_black
     water -> b_blue , f_darkblue
-    exploied place -> b_blue , f_darkred
+    bursted place -> b_blue , f_darkred
     ship -> b_darkyellow , f_grey
-    exploied ship -> b_darkred , f_darkred
+    bursted ship -> b_darkred , f_darkred
     selector -> b_black
 */
 /*
     water -> ~
     ship -> 1 .. 9
-    exploied place , exploied ship -> X
+    bursted place , bursted ship -> X
 
     note: in map array
-    - exploied place -> x
-    - exploied ship -> X (capital)
+    - bursted place -> x
+    - bursted ship -> X (capital)
 */
 
 extern int exist_selector(int, int, int, int(*)[]);
 
-extern void move_selector(char, int(*)[]);
+extern void move_selector(char, int(*)[], int);
 
 extern void change_player(void);
 
@@ -28,9 +28,7 @@ extern int player;
 
 extern int last_player;
 
-int selector[1][2] = {{0, 0}};
-
-void cli_print_board(int _selector[][2]) {
+void cli_print_board(int selector[][2]) {
     int _player = player;
     char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
 
@@ -69,7 +67,7 @@ void cli_print_board(int _selector[][2]) {
             if (j == -1 || j == board_size + 1) {
                 printf("%s%s%2d %s", b_white, f_black, i + 1, color_reset);
             }
-            else if (exist_selector(1, i, j_temp, _selector) && _player == 1) {
+            else if (exist_selector(1, i, j_temp, selector) && _player != player) {
                 printf("%s  %s", b_black, color_reset);
             }
             else if (j == board_size) {
@@ -115,9 +113,9 @@ void cli_print_board(int _selector[][2]) {
 //1 : attack
 //2 : repair
 //3 : save
-int proc_selector() {
+int proc_selector(int selector[][2]) {
     int _continue = 1;
-    int cmd;
+    int cmd = 0;
 
     while (_continue) {
         system(cls);
@@ -126,26 +124,26 @@ int proc_selector() {
 
         switch (getch()) {
             case UP:
-                move_selector('U', selector);
+                move_selector('U', selector, 1);
 
                 break;
 
             case DOWN:
-                move_selector('D', selector);
+                move_selector('D', selector, 1);
 
                 break;
 
             case RIGHT:
-                move_selector('R', selector);
+                move_selector('R', selector, 1);
 
                 break;
 
             case LEFT:
-                move_selector('L', selector);
+                move_selector('L', selector, 1);
 
                 break;
 
-            case ATTACK:
+            case ENTER:
                 cmd = 1;
                 _continue = 0;
 
@@ -157,26 +155,24 @@ int proc_selector() {
 }
 
 //result : attacker + pos_of_attack_i + pos_of_attack_j + command
-//arg : exploision alert + number of exploied ship (not exist => 0)
-void call_cli(int result[4], int exp_alert) {
+void call_cli(int result[4], int burst_alert) {
+    int selector[1][2] = {{0, 0}};
     int command;
     int temp;
 
-    if (exp_alert != 1) {
+    if (burst_alert != 1) {
         last_player = player;
         ++player;
         player %= 2;
     }
-    else {
-        printf("\a");
-    }
 
     if (last_player != player) {
         change_player();
+        last_player = player;
     }
 
 
-    command = proc_selector();
+    command = proc_selector(selector);
 
     result[0] = player;
     result[1] = selector[0][0];
