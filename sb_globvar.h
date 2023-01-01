@@ -38,8 +38,7 @@
 #define LEFT 'a'
 #define ENTER 'e'
 #define EXIT 'q'
-#define ATTACK 'e'
-#define REPAIR 'r'
+#define REPAIR_ATTACK 'r'
 #define SAVE 'q'
 
 #ifdef __linux__
@@ -65,10 +64,11 @@ struct player_info {
     char board[52][52];
     char name[20];
     int ship_number;
-    int exploied_ships_number[9];
+    int bursting_ship_no;
+    int bursted_ships_number[9];
 
-    //max 9 ship with max 12 part
-    int ships_places[9][12][2];
+    //max 9 ship with max 12 part and -1 instead \0 in int
+    int ships_places[9][13][2];
 };
 
 extern int is_ended;

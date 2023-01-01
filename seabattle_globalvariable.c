@@ -4,6 +4,7 @@ struct player_info {
     char board[52][52];
     char name[20];
     int ship_number;
+    int bursted_ships_number[9];
 
     //max 9 ship with max 12 part
     int ships_places[9][12][2];
