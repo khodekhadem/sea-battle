@@ -1,9 +1,6 @@
 // optimize up to 52*52 board
-// optimize for windows and linux
+// optimize for windows
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "sb_globvar.h"
 
 #ifdef __linux__
@@ -18,15 +15,13 @@
 #endif
 #endif
 
-extern void call_Rcli(void);
-
 extern void call_cli(int[4], int);
 
 extern void call_engine(int *, int[]);
 
-int player = 0;
-int last_player = 0;
+extern void call_menu(void);
 
+extern void call_save(void);
 
 /*
     indexes , player info -> b_white , f_black
@@ -157,6 +152,7 @@ int check_end() {
 
 int main() {
     system(cls);
+    system("mkdir savefiles");
 
     for (int i = 0; i < 9; ++i) {
         p[0]->bursted_ships_number[i] = 0;
@@ -176,7 +172,7 @@ int main() {
     sleep(2);
     system(cls);
 
-    call_Rcli();
+    call_menu();
 
     while (!is_ended) {
         call_cli(cli_result, engine_result);

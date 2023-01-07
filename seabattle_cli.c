@@ -24,10 +24,6 @@ extern void move_selector(char, int(*)[], int);
 
 extern void change_player(void);
 
-extern int player;
-
-extern int last_player;
-
 void cli_print_board(int selector[][2]) {
     int _player = player;
     char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0

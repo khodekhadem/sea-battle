@@ -15,6 +15,9 @@ int is_ended = 0;
 int board_size;
 int repair_num;
 
+int player = 0;
+int last_player = 0;
+
 struct player_info p1;
 struct player_info p2;
 

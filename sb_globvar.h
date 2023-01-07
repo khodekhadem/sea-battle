@@ -76,6 +76,9 @@ extern int is_ended;
 extern int board_size;
 extern int repair_num;
 
+extern int player;
+extern int last_player;
+
 extern struct player_info p1;
 extern struct player_info p2;
 
