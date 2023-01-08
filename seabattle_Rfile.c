@@ -4,9 +4,8 @@
 void call_Rfile(const char savefile_path[]) {
     FILE *savefile;
 
-    char path[50] = "savefiles\\sb_savefile";
+    char path[50] = "savefiles\\";
     strcat(path, savefile_path);
-    strcat(path, ".bin");
 
     savefile = fopen(path, "rb");
 

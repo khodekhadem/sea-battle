@@ -24,11 +24,13 @@ extern void move_selector(char, int(*)[], int);
 
 extern void change_player(void);
 
+extern void call_save(void);
+
 void cli_print_board(int selector[][2]) {
     int _player = player;
     char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
 
-    printf("w,a,s,d -> move / e -> enter\n\n");
+    printf("w,a,s,d -> move / e -> enter / z -> save / q -> exit\n\n");
 
     printf("%s%splayer name : %s%s\n", b_white, f_black, p[_player]->name, color_reset);
 
@@ -108,7 +110,6 @@ void cli_print_board(int selector[][2]) {
 
 //1 : attack
 //2 : repair
-//3 : save
 int proc_selector(int selector[][2]) {
     int _continue = 1;
     int cmd = 0;
@@ -144,6 +145,14 @@ int proc_selector(int selector[][2]) {
                 _continue = 0;
 
                 break;
+
+            case SAVE:
+                call_save();
+
+                break;
+
+            case EXIT:
+                exit(0);
         }
     }
 

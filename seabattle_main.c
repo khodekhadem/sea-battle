@@ -21,8 +21,6 @@ extern void call_engine(int *, int[]);
 
 extern void call_menu(void);
 
-extern void call_save(void);
-
 /*
     indexes , player info -> b_white , f_black
     water -> b_blue , f_darkblue
@@ -151,8 +149,8 @@ int check_end() {
 }
 
 int main() {
-    system(cls);
     system("mkdir savefiles");
+    system(cls);
 
     for (int i = 0; i < 9; ++i) {
         p[0]->bursted_ships_number[i] = 0;

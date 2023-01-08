@@ -39,7 +39,7 @@
 #define ENTER 'e'
 #define EXIT 'q'
 #define REPAIR_ATTACK 'r'
-#define SAVE 'q'
+#define SAVE 'z'
 
 #ifdef __linux__
 #if __linux__

@@ -7,6 +7,9 @@ void call_save() {
     char num[5];
 
     sprintf(num, "%d", save_number);
+    strcat(path, "-");
+    strcat(path, p[player]->name);
+    strcat(path, "-");
     strcat(path, num);
     strcat(path, ".bin");
 
