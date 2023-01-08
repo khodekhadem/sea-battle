@@ -34,7 +34,7 @@ use this command
 
     ./seabattle
 
-# Additional explanations
+# Additional Information
 This project is an academic(university) project in a two-person group with accounts
 1. www.github.com/khodekhadem
 2. www.github.com/aligrand
