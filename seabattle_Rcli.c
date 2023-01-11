@@ -31,10 +31,10 @@ int exist_selector(int n, int i, int j, int selector[][2]) {
     return 0;
 }
 
-void Rcli_print_board(int selector[][2], int player) {
+void Rcli_print_board(int selector[][2]) {
     char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
 
-    printf("w,a,s,d -> move / e -> enter\n\n");
+    printf("w,a,s,d -> move / e -> enter / q -> exit\n\n");
 
     printf("%s%splayer name : %s%s\n\n", b_white, f_black, p[player]->name, color_reset);
 
@@ -133,9 +133,8 @@ void move_selector(char mode, int selector[][2], int len) {
     }
 }
 
-void put_ship(int player, int selector[][2]) {
+void put_ship(int selector[][2]) {
     static int ship_no = 1;
-    static int last_player = 0;
 
     if (player != last_player) {
         ship_no = 1;
@@ -150,7 +149,7 @@ void put_ship(int player, int selector[][2]) {
     last_player = player;
 }
 
-void selector_to_ships_places(int player, int selector[][2]) {
+void selector_to_ships_places(int selector[][2]) {
     static int ship_no = 0;
     static int last_player = 0;
     int i;
@@ -172,7 +171,7 @@ void selector_to_ships_places(int player, int selector[][2]) {
     last_player = player;
 }
 
-int is_another_ship_available(int player, int selector[][2]) {
+int is_another_ship_available(int selector[][2]) {
     int k = 0;
 
     for (int i = 0; i < 3; ++i) {
@@ -187,7 +186,8 @@ int is_another_ship_available(int player, int selector[][2]) {
 }
 
 // 0 -> normal , 1 -> exit
-void ship_creator(int player) {
+void ship_creator() {
+    char temp_char;
     system(cls);
 
     //... & ij
@@ -196,15 +196,15 @@ void ship_creator(int player) {
     printf("%s%s%s%s\n\n", b_white, f_black, p[player]->name, color_reset);
     printf("how is your ship? vertical <v> or horizontal <h> : ");
 
-    switch (getch()) {
+    fflush(stdin);
+    scanf("%c",&temp_char);
+    switch (temp_char) {
         case 'v':
-            printf("v");
             selector_creator(selector, 3, 1);
 
             break;
 
         case 'h':
-            printf("h");
             selector_creator(selector, 1, 3);
 
             break;
@@ -215,9 +215,23 @@ void ship_creator(int player) {
     while (_continue) {
         system(cls);
 
-        Rcli_print_board(selector, player);
+        Rcli_print_board(selector);
+
+#ifdef __linux__
+#if __linux__
+        initscr();
+        noecho();
+        cbreak();
+#endif
+#endif
 
         switch (getch()) {
+#ifdef __linux__
+#if __linux__
+            endwin();
+#endif
+#endif
+
             case UP:
                 move_selector('U', selector, 3);
 
@@ -239,14 +253,17 @@ void ship_creator(int player) {
                 break;
 
             case ENTER:
-                if (is_another_ship_available(player, selector)) {
+                if (is_another_ship_available(selector)) {
                     continue;
                 }
 
-                put_ship(player, selector);
-                selector_to_ships_places(player, selector);
+                put_ship(selector);
+                selector_to_ships_places(selector);
                 _continue = 0;
                 break;
+
+            case EXIT:
+                exit(0);
         }
     }
 
@@ -262,14 +279,6 @@ void change_player() {
 }
 
 void call_Rcli() {
-#ifdef __linux__
-#if __linux__
-    initscr();
-    noecho();
-    cbreak();
-#endif
-#endif
-
     printf("please write size of map (1 .. 52)\n");
 
     scanf("%d", &board_size);
@@ -311,19 +320,15 @@ void call_Rcli() {
     board_creator(p1.board);
     board_creator(p2.board);
 
+    player = 0;
     for (int i = 0; i < p1.ship_number; i++) {
-        ship_creator(0);
+        ship_creator();
     }
 
     change_player();
 
+    player = 1;
     for (int i = 0; i < p2.ship_number; i++) {
-        ship_creator(1);
+        ship_creator();
     }
-
-#ifdef __linux__
-#if __linux__
-    endwin();
-#endif
-#endif
 }

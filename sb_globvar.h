@@ -45,6 +45,7 @@
 #if __linux__
 #define cls "clear"
 #include <ncurses.h>
+
 #endif
 #endif
 

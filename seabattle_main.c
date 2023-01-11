@@ -1,19 +1,7 @@
 // optimize up to 52*52 board
 // optimize for windows
-
 #include "sb_globvar.h"
 
-#ifdef __linux__
-#if __linux__
-#define cls "clear"
-#endif
-#endif
-
-#ifdef _WIN32
-#if _WIN32
-#define cls "cls"
-#endif
-#endif
 
 extern void call_cli(int[4], int);
 
@@ -171,6 +159,9 @@ int main() {
     system(cls);
 
     call_menu();
+
+    player = 0;
+    last_player = 0;
 
     while (!is_ended) {
         call_cli(cli_result, engine_result);

@@ -119,7 +119,21 @@ int proc_selector(int selector[][2]) {
 
         cli_print_board(selector);
 
+#ifdef __linux__
+#if __linux__
+        initscr();
+        noecho();
+        cbreak();
+#endif
+#endif
+
         switch (getch()) {
+#ifdef __linux__
+#if __linux__
+            endwin();
+#endif
+#endif
+
             case UP:
                 move_selector('U', selector, 1);
 
@@ -163,7 +177,6 @@ int proc_selector(int selector[][2]) {
 void call_cli(int result[4], int burst_alert) {
     int selector[1][2] = {{0, 0}};
     int command;
-    int temp;
 
     if (burst_alert != 1) {
         last_player = player;
