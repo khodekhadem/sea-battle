@@ -1,6 +1,8 @@
 #ifdef __linux__
 #if __linux__
-#include <ncurses.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
 #endif
 #endif
 
@@ -29,25 +31,21 @@ struct player_info p2;
 
 struct player_info *p[2] = {&p1, &p2};
 
-// 1 -> active 0 -> deactive
-void ncurses_onoff(int mode) {
-    switch (mode) {
-        case 0:
 #ifdef __linux__
 #if __linux__
-            endwin();
-#endif
-#endif
-            break;
 
-        case 1:
-#ifdef __linux__
-#if __linux__
-            initscr();
-            noecho();
-            cbreak();
-#endif
-#endif
-            break;
-    }
+// emulate conio.h getch in linux
+int getch() {\
+    struct termios oldt, newt;\
+    int ch;\
+    tcgetattr(STDIN_FILENO, &oldt);\
+    newt = oldt;\
+    newt.c_lflag &= ~(ICANON | ECHO);\
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);\
+    ch = getchar();\
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);\
+    return ch;\
 }
+
+#endif
+#endif

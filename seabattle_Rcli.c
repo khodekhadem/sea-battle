@@ -12,7 +12,7 @@
     ship -> 1 .. 9
 */
 
-extern void ncurses_onoff(int);
+
 
 void board_creator(char board[][52]) {
     // water
@@ -219,34 +219,28 @@ void ship_creator() {
 
         Rcli_print_board(selector);
 
-        ncurses_onoff(1);
         switch (getch()) {
             case UP:
-                ncurses_onoff(0);
                 move_selector('U', selector, 3);
 
                 break;
 
             case DOWN:
-                ncurses_onoff(0);
                 move_selector('D', selector, 3);
 
                 break;
 
             case RIGHT:
-                ncurses_onoff(0);
                 move_selector('R', selector, 3);
 
                 break;
 
             case LEFT:
-                ncurses_onoff(0);
                 move_selector('L', selector, 3);
 
                 break;
 
             case ENTER:
-                ncurses_onoff(0);
                 if (is_another_ship_available(selector)) {
                     continue;
                 }
@@ -257,7 +251,6 @@ void ship_creator() {
                 break;
 
             case EXIT:
-                ncurses_onoff(0);
                 exit(0);
         }
     }

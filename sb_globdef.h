@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 // no. of columns = colN => arr[row][col] = *(arr + ((row * colN) + col))
 #define pos(arr, row, col, colN) (*(arr + ((row * colN) + col)))
@@ -44,7 +45,12 @@
 #ifdef __linux__
 #if __linux__
 #define cls "clear"
-#include <ncurses.h>
+#endif
+#endif
+
+#ifdef __linux__
+#if __linux__
+extern int getch(void);
 #endif
 #endif
 
