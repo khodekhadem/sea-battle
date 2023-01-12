@@ -1,4 +1,4 @@
-#include "sb_globvar.h"
+#include "sb_globdef.h"
 
 /*
     indexes , player info -> b_white , f_black
@@ -25,6 +25,8 @@ extern void move_selector(char, int(*)[], int);
 extern void change_player(void);
 
 extern void call_save(void);
+
+extern void ncurses_onoff(int);
 
 void cli_print_board(int selector[][2]) {
     int _player = player;
@@ -119,53 +121,47 @@ int proc_selector(int selector[][2]) {
 
         cli_print_board(selector);
 
-#ifdef __linux__
-#if __linux__
-        initscr();
-        noecho();
-        cbreak();
-#endif
-#endif
-
+        ncurses_onoff(1);
         switch (getch()) {
-#ifdef __linux__
-#if __linux__
-            endwin();
-#endif
-#endif
-
             case UP:
+                ncurses_onoff(0);
                 move_selector('U', selector, 1);
 
                 break;
 
             case DOWN:
+                ncurses_onoff(0);
                 move_selector('D', selector, 1);
 
                 break;
 
             case RIGHT:
+                ncurses_onoff(0);
                 move_selector('R', selector, 1);
 
                 break;
 
             case LEFT:
+                ncurses_onoff(0);
                 move_selector('L', selector, 1);
 
                 break;
 
             case ENTER:
+                ncurses_onoff(0);
                 cmd = 1;
                 _continue = 0;
 
                 break;
 
             case SAVE:
+                ncurses_onoff(0);
                 call_save();
 
                 break;
 
             case EXIT:
+                ncurses_onoff(0);
                 exit(0);
         }
     }

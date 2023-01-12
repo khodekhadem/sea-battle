@@ -1,4 +1,4 @@
-#include "sb_globvar.h"
+#include "sb_globdef.h"
 
 /*
     water -> ~

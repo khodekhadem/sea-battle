@@ -1,5 +1,5 @@
 #include <dirent.h>
-#include "sb_globvar.h"
+#include "sb_globdef.h"
 
 extern void call_Rcli(void);
 

@@ -1,6 +1,6 @@
 // optimize up to 52*52 board
 // optimize for windows
-#include "sb_globvar.h"
+#include "sb_globdef.h"
 
 
 extern void call_cli(int[4], int);

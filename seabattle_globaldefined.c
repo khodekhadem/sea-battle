@@ -1,3 +1,9 @@
+#ifdef __linux__
+#if __linux__
+#include <ncurses.h>
+#endif
+#endif
+
 const char *logo = "\033[34m\033[101mSEA\033[31m\033[104mBATTLE\033[0m\n\n";
 
 struct player_info {
@@ -22,3 +28,26 @@ struct player_info p1;
 struct player_info p2;
 
 struct player_info *p[2] = {&p1, &p2};
+
+// 1 -> active 0 -> deactive
+void ncurses_onoff(int mode) {
+    switch (mode) {
+        case 0:
+#ifdef __linux__
+#if __linux__
+            endwin();
+#endif
+#endif
+            break;
+
+        case 1:
+#ifdef __linux__
+#if __linux__
+            initscr();
+            noecho();
+            cbreak();
+#endif
+#endif
+            break;
+    }
+}

@@ -1,5 +1,5 @@
-#ifndef SEA_BATTLE_SB_GLOBVAR_H
-#define SEA_BATTLE_SB_GLOBVAR_H
+#ifndef SEA_BATTLE_SB_GLOBDEF_H
+#define SEA_BATTLE_SB_GLOBDEF_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,7 +45,6 @@
 #if __linux__
 #define cls "clear"
 #include <ncurses.h>
-
 #endif
 #endif
 
@@ -58,6 +57,7 @@
 
 #endif
 #endif
+
 
 extern const char *logo;
 
@@ -85,4 +85,4 @@ extern struct player_info p2;
 
 extern struct player_info *p[2];
 
-#endif //SEA_BATTLE_SB_GLOBVAR_H
+#endif //SEA_BATTLE_SB_GLOBDEF_H

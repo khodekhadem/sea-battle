@@ -1,4 +1,4 @@
-#include "sb_globvar.h"
+#include "sb_globdef.h"
 
 void call_save() {
     static int save_number = 1;
