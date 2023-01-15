@@ -12,7 +12,9 @@ struct player_info {
     char board[52][52];
     char name[20];
     int ship_number;
-    int bursted_ships_number[9];
+    int total_part;
+    int bursting_ship_no;
+    int repair_used;
 
     //max 9 ship with max 12 part
     int ships_places[9][12][2];
@@ -22,9 +24,12 @@ int is_ended = 0;
 
 int board_size;
 int repair_num;
+int ship_part_number;
 
 int player = 0;
 int last_player = 0;
+
+char board_cpy[2][52][52];
 
 struct player_info p1;
 struct player_info p2;

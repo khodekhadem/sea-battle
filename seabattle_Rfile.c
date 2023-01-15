@@ -5,6 +5,13 @@ void call_Rfile(const char savefile_path[]) {
     FILE *savefile;
 
     char path[50] = "savefiles\\";
+
+#ifdef __linux__
+#if __linux__
+    path[9] = '/';
+#endif
+#endif
+
     strcat(path, savefile_path);
 
     savefile = fopen(path, "rb");
@@ -21,6 +28,9 @@ void call_Rfile(const char savefile_path[]) {
     fread(&board_size, sizeof(int), 1, savefile);
     fread(&player, sizeof(int), 1, savefile);
     fread(&last_player, sizeof(int), 1, savefile);
+    fread(&repair_num, sizeof(int), 1, savefile);
+    fread(&ship_part_number, sizeof(int), 1, savefile);
+    fread(board_cpy, sizeof(char[2][52][52]), 2, savefile);
 
     fclose(savefile);
 }

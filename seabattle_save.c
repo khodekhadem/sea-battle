@@ -1,12 +1,18 @@
 #include "sb_globdef.h"
 
 void call_save() {
-    static int save_number = 1;
+    static int save_number[2] = {1, 1};
     FILE *savefile;
     char path[50] = "savefiles\\sb_savefile";
     char num[5];
 
-    sprintf(num, "%d", save_number);
+#ifdef __linux__
+#if __linux__
+    path[9] = '/';
+#endif
+#endif
+
+    sprintf(num, "%d", save_number[player]);
     strcat(path, "-");
     strcat(path, p[player]->name);
     strcat(path, "-");
@@ -27,7 +33,12 @@ void call_save() {
     fwrite(&board_size, sizeof(int), 1, savefile);
     fwrite(&player, sizeof(int), 1, savefile);
     fwrite(&last_player, sizeof(int), 1, savefile);
+    fwrite(&repair_num, sizeof(int), 1, savefile);
+    fwrite(&ship_part_number, sizeof(int), 1, savefile);
+    fwrite(board_cpy, sizeof(char[2][52][52]), 2, savefile);
 
     fclose(savefile);
+
+    ++save_number[player];
 }
 

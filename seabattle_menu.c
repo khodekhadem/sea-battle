@@ -18,10 +18,13 @@ void show_save() {
     }
 
     printf("select save : (q -> exit)\n\n");
-    for (int i = -1; (dir_content = readdir(dir)) != NULL; ++i) {
+    for (int i = 1; (dir_content = readdir(dir)) != NULL; ++i) {
         if (dir_content->d_name[0] != '.') {
             printf("%d) %s\n", i, dir_content->d_name);
             strcpy(filename[i - 1], dir_content->d_name);
+        }
+        else {
+            --i;
         }
     }
 

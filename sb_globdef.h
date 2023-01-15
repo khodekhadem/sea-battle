@@ -71,8 +71,9 @@ struct player_info {
     char board[52][52];
     char name[20];
     int ship_number;
+    int total_part;
     int bursting_ship_no;
-    int bursted_ships_number[9];
+    int repair_used;
 
     //max 9 ship with max 12 part and -1 instead \0 in int
     int ships_places[9][13][2];
@@ -82,9 +83,12 @@ extern int is_ended;
 
 extern int board_size;
 extern int repair_num;
+extern int ship_part_number;
 
 extern int player;
 extern int last_player;
+
+extern char board_cpy[2][52][52];
 
 extern struct player_info p1;
 extern struct player_info p2;

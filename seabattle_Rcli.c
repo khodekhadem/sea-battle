@@ -12,7 +12,13 @@
     ship -> 1 .. 9
 */
 
-
+void copy_2Dchar_array(int row, int coln, char *dest_arr, char *scr_arr) {
+    for (int i = 0; i < row; ++i) {
+        for (int j = 0; j < coln; ++j) {
+            pos(dest_arr, i, j, coln) = pos(scr_arr, i, j, coln);
+        }
+    }
+}
 
 void board_creator(char board[][52]) {
     // water
@@ -33,7 +39,7 @@ int exist_selector(int n, int i, int j, int selector[][2]) {
     return 0;
 }
 
-void Rcli_print_board(int selector[][2]) {
+void Rcli_print_board(int selector[][2], int len) {
     char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
 
     printf("w,a,s,d -> move / e -> enter / q -> exit\n\n");
@@ -53,7 +59,7 @@ void Rcli_print_board(int selector[][2]) {
             if (j == -1) {
                 printf("%s%s%2d %s", b_white, f_black, i + 1, color_reset);
             }
-            else if (exist_selector(3, i, j, selector)) {
+            else if (exist_selector(len, i, j, selector)) {
                 printf("%s  %s", b_black, color_reset);
             }
             else {
@@ -135,14 +141,14 @@ void move_selector(char mode, int selector[][2], int len) {
     }
 }
 
-void put_ship(int selector[][2]) {
+void put_ship(int selector[][2], int len) {
     static int ship_no = 1;
 
     if (player != last_player) {
         ship_no = 1;
     }
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < len; i++) {
         p[player]->board[selector[i][0]][selector[i][1]] = num_to_char(ship_no);
     }
 
@@ -151,7 +157,7 @@ void put_ship(int selector[][2]) {
     last_player = player;
 }
 
-void selector_to_ships_places(int selector[][2]) {
+void selector_to_ships_places(int selector[][2], int len) {
     static int ship_no = 0;
     static int last_player = 0;
     int i;
@@ -160,7 +166,7 @@ void selector_to_ships_places(int selector[][2]) {
         ship_no = 0;
     }
 
-    for (i = 0; i < 3; ++i) {
+    for (i = 0; i < len; ++i) {
         p[player]->ships_places[ship_no][i][0] = selector[i][0];
         p[player]->ships_places[ship_no][i][1] = selector[i][1];
     }
@@ -170,13 +176,15 @@ void selector_to_ships_places(int selector[][2]) {
 
     ++ship_no;
 
+    ++(p[player]->ship_number);
+
     last_player = player;
 }
 
-int is_another_ship_available(int selector[][2]) {
+int is_another_ship_available(int selector[][2], int len) {
     int k = 0;
 
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < len; ++i) {
         if (p[player]->board[selector[k][0]][selector[k][1]] != '~') {
             return 1;
         }
@@ -187,88 +195,95 @@ int is_another_ship_available(int selector[][2]) {
     return 0;
 }
 
-// 0 -> normal , 1 -> exit
-void ship_creator() {
-    char temp_char;
+int ship_creator() {
+    int row, col;
     system(cls);
 
     //... & ij
-    int selector[3][2];
+    int selector[12][2];
 
     printf("%s%s%s%s\n\n", b_white, f_black, p[player]->name, color_reset);
-    printf("how is your ship? vertical <v> or horizontal <h> : ");
+    printf("write row and col of your ship (max part = 12) (e.g. 2 3 for 2*3)\n");
+    printf("(escape of add ship => enter 0 0) (remain = %d) : ", ship_part_number - p[player]->total_part);
 
-    fflush(stdin);
-    scanf("%c",&temp_char);
-    switch (temp_char) {
-        case 'v':
-            selector_creator(selector, 3, 1);
+    scanf("%d%d", &row, &col);
+    if (row == 0 && col == 0) {
+        return 0;
+    }
+    while ((row * col) < 1 || (row * col) > 12 || (row > board_size) || (col > board_size) || (row < 1) || (col < 1)) {
+        printf("%s!!!your numbers is incorrect. write it again.%s\n", f_orange, color_reset);
+        scanf("%d%d", &row, &col);
 
-            break;
+        printf("%s%s", mv_cur_up, erase_line);
+        printf("%s%s", mv_cur_up, erase_line);
+    }
+    while ((row * col) + p[player]->total_part > ship_part_number) {
+        printf("%s!!!parts over limit%s\n", f_orange, color_reset);
+        scanf("%d%d", &row, &col);
 
-        case 'h':
-            selector_creator(selector, 1, 3);
-
-            break;
+        printf("%s%s", mv_cur_up, erase_line);
+        printf("%s%s", mv_cur_up, erase_line);
     }
 
-    int _continue = 1;
+    selector_creator(selector, row, col);
+    p[player]->total_part += row * col;
 
-    while (_continue) {
+    while (1) {
         system(cls);
 
-        Rcli_print_board(selector);
+        Rcli_print_board(selector, row * col);
 
         switch (getch()) {
             case UP:
-                move_selector('U', selector, 3);
+                move_selector('U', selector, row * col);
 
                 break;
 
             case DOWN:
-                move_selector('D', selector, 3);
+                move_selector('D', selector, row * col);
 
                 break;
 
             case RIGHT:
-                move_selector('R', selector, 3);
+                move_selector('R', selector, row * col);
 
                 break;
 
             case LEFT:
-                move_selector('L', selector, 3);
+                move_selector('L', selector, row * col);
 
                 break;
 
             case ENTER:
-                if (is_another_ship_available(selector)) {
+                if (is_another_ship_available(selector, row * col)) {
                     continue;
                 }
 
-                put_ship(selector);
-                selector_to_ships_places(selector);
-                _continue = 0;
-                break;
+                put_ship(selector, row * col);
+                selector_to_ships_places(selector, row * col);
+                system(cls);
+
+                return 1;
 
             case EXIT:
                 exit(0);
         }
     }
-
-    system(cls);
 }
 
 void change_player() {
     system(cls);
 
     printf("PLEASE change player...");
+    fflush(stdout);
 
     sleep(2);
 }
 
 void call_Rcli() {
-    printf("please write size of map (1 .. 52)\n");
+    int _continue_selector;
 
+    printf("please write size of map (1 .. 52)\n");
     scanf("%d", &board_size);
 
     while (board_size < 1 || 52 < board_size) {
@@ -282,6 +297,11 @@ void call_Rcli() {
 
     system(cls);
 
+    printf("please write repair number : \n");
+    scanf("%d", &repair_num);
+
+    system(cls);
+
     printf("write player1 name (max = 19 character) : ");
     scanf("%s", p1.name);
     printf("\nwrite player2 name (max = 19 character) : ");
@@ -289,34 +309,43 @@ void call_Rcli() {
 
     system(cls);
 
-    printf("write number of ships (max = 9) : ");
-    scanf("%d", &p1.ship_number);
-    while (p1.ship_number < 1) {
-        printf("%s!!!your number must be bigger than 0%s\n", f_orange,
-               color_reset);
-        scanf("%d", &p1.ship_number);
+    printf("write max part of ships (max = 108 part) (your limit = must be less than %d) : ",
+           (board_size * board_size) / 4);
+    scanf("%d", &ship_part_number);
+    while (ship_part_number < 1 || ship_part_number > ((board_size * board_size) / 4)) {
+        printf("%s!!!your number is either less than 1 or more than limit%s\n", f_orange, color_reset);
+        scanf("%d", &ship_part_number);
 
         printf("%s%s", mv_cur_up, erase_line);
         printf("%s%s", mv_cur_up, erase_line);
     }
-    if (p1.ship_number > 9) {
-        p1.ship_number %= 9;
-        ++p1.ship_number;
+    if (ship_part_number > 108) {
+        p1.ship_number %= 108;
     }
-    p2.ship_number = p1.ship_number;
 
     board_creator(p1.board);
     board_creator(p2.board);
 
+    _continue_selector = 1;
     player = 0;
-    for (int i = 0; i < p1.ship_number; i++) {
-        ship_creator();
+    while (_continue_selector) {
+        if (p[player]->total_part == ship_part_number) {
+            break;
+        }
+        _continue_selector = ship_creator();
     }
 
     change_player();
 
+    _continue_selector = 1;
     player = 1;
-    for (int i = 0; i < p2.ship_number; i++) {
-        ship_creator();
+    while (_continue_selector) {
+        if (p[player]->total_part == ship_part_number) {
+            break;
+        }
+        _continue_selector = ship_creator();
     }
+
+    copy_2Dchar_array(52, 52, board_cpy[0], p1.board);
+    copy_2Dchar_array(52, 52, board_cpy[1], p2.board);
 }
