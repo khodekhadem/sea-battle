@@ -26,17 +26,29 @@ extern void change_player(void);
 
 extern void call_save(void);
 
-void cli_print_board(int selector[][2]) {
+void cmd_returner(int cmd, char str[]) {
+    if (cmd == 0) {
+        strcpy(str, "Attack");
+    }
+    else {
+        strcpy(str, "Repair");
+    }
+}
+
+void cli_print_board(int selector[][2], int command) {
     int _player = player;
-    char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
+    char cmd_str[10];
+    const char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
 
-    printf("w,a,s,d -> move / e -> enter / z -> save / q -> exit\n\n");
+    printf("w,a,s,d -> move / e -> enter / z -> save / q -> exit / r -> repair|attack\n\n");
 
-    printf("%s%splayer name : %s%s\n", b_white, f_black, p[_player]->name, color_reset);
+    cmd_returner(command, cmd_str);
+    printf("%s%splayer name : %s **** command : %s%s\n", b_white, f_black, p[player]->name, cmd_str, color_reset);
 
     //------------------------------------------
 
-    printf("%s%sremain enemy's ships : %d%s\n\n", b_white, f_black, p[(_player + 1) % 2]->ship_number, color_reset);
+    printf("%s%sremain enemy's ships : %d **** remain repair chance : %d%s\n\n", b_white, f_black,
+           p[(_player + 1) % 2]->ship_number, repair_num - p[player]->repair_used, color_reset);
 
     //------------------------------------------
 
@@ -65,7 +77,8 @@ void cli_print_board(int selector[][2]) {
             if (j == -1 || j == board_size + 1) {
                 printf("%s%s%2d %s", b_white, f_black, i + 1, color_reset);
             }
-            else if (exist_selector(1, i, j_temp, selector) && _player != player) {
+            else if ((exist_selector(1, i, j_temp, selector) && _player != player && command == 0) ||
+                     (exist_selector(1, i, j_temp, selector) && _player == player && command == 1)) {
                 printf("%s  %s", b_black, color_reset);
             }
             else if (j == board_size) {
@@ -108,8 +121,8 @@ void cli_print_board(int selector[][2]) {
     }
 }
 
-//1 : attack
-//2 : repair
+//0 : attack
+//1 : repair
 int proc_selector(int selector[][2]) {
     int _continue = 1;
     int cmd = 0;
@@ -117,7 +130,7 @@ int proc_selector(int selector[][2]) {
     while (_continue) {
         system(cls);
 
-        cli_print_board(selector);
+        cli_print_board(selector, cmd);
 
         switch (getch()) {
             case UP:
@@ -141,8 +154,17 @@ int proc_selector(int selector[][2]) {
                 break;
 
             case ENTER:
-                cmd = 1;
                 _continue = 0;
+
+                if (cmd == 1 && p[player]->repair_used == repair_num) {
+                    _continue = 1;
+                }
+
+                break;
+
+            case REPAIR_ATTACK:
+                ++cmd;
+                cmd %= 2;
 
                 break;
 

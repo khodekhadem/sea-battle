@@ -1,9 +1,11 @@
-// optimize up to 52*52 board
-// optimize for windows
+/**
+    @property 1) optimize up to 52*52 board
+    @property 2) optimize for windows and linux
+ */
+
 #include "sb_globdef.h"
 
-
-extern void call_cli(int[4], int);
+extern void call_cli(int[], int);
 
 extern void call_engine(int *, int[]);
 
@@ -26,6 +28,7 @@ extern void call_menu(void);
     - bursted place -> x
     - bursted ship -> X (capital)
 */
+
 void main_print_board(int attack_i, int attack_j, int status) {
     int _player = player;
     char characters[53] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // contains \0
@@ -38,11 +41,7 @@ void main_print_board(int attack_i, int attack_j, int status) {
 
     printf("w,a,s,d -> move / e -> enter\n\n");
 
-    printf("%s%splayer name : %s%s\n", b_white, f_black, p[_player]->name, color_reset);
-
-    //------------------------------------------
-
-    printf("%s%sremain enemy's ships : %d%s\n\n", b_white, f_black, p[(_player + 1) % 2]->ship_number, color_reset);
+    printf("%s%splayer name : %s%s\n\n", b_white, f_black, p[_player]->name, color_reset);
 
     //------------------------------------------
 
@@ -140,16 +139,17 @@ int main() {
     system("mkdir savefiles");
     system(cls);
 
-    for (int i = 0; i < 9; ++i) {
-        p[0]->bursted_ships_number[i] = 0;
-        p[1]->bursted_ships_number[i] = 0;
-    }
-
     p[0]->bursting_ship_no = 0;
     p[1]->bursting_ship_no = 0;
 
+    p[0]->ship_number = 0;
+    p[1]->ship_number = 0;
+
+    p[0]->total_part = 0;
+    p[1]->total_part - 0;
+
     // attacker + pos_of_attack_i + pos_of_attack_j + command -> 4 member
-    int cli_result[4] = {0,0,0,0};
+    int cli_result[4] = {0, 0, 0, 0};
     //bursting alert
     int engine_result = 1;
 
@@ -159,9 +159,6 @@ int main() {
     system(cls);
 
     call_menu();
-
-    player = 0;
-    last_player = 0;
 
     while (!is_ended) {
         call_cli(cli_result, engine_result);

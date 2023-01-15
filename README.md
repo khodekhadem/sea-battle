@@ -1,6 +1,7 @@
 
 [![Available_in](https://img.shields.io/badge/-Available%20in-555)]()
 [![Windows](https://img.shields.io/badge/-WINDOWS-blue)](https://www.microsoft.com/en-us/windows)
+[![Linux](https://img.shields.io/badge/-LINUX-blue)]()
 
 
 
@@ -26,8 +27,7 @@ then, move to the directory
 
 compile the sources
 
-    gcc -Wall sb_globvar.h seabattle_main.c seabattle_Rcli.c seabattle_cli.c seabattle_engine.c
-    seabattle_globalvariable.c seabattle_menu.c seabattle_Rfile.c seabattle_save.c -o seabattle
+    gcc -Wall sb_globvar.h seabattle_main.c seabattle_Rcli.c seabattle_cli.c seabattle_engine.c seabattle_globalvariable.c seabattle_menu.c seabattle_Rfile.c seabattle_save.c -o seabattle
 
 # run
 use this command
