@@ -3,7 +3,18 @@
 
 extern void call_Rcli(void);
 
+extern void call_Rcli_gi(void);
+
 extern void call_Rfile(const char *);
+
+void change_player() {
+    system(cls);
+
+    printf("PLEASE change player...");
+    fflush(stdout);
+
+    sleep(2);
+}
 
 void show_save() {
     DIR *dir;
@@ -46,11 +57,68 @@ void call_menu() {
         case '1':
             system(cls);
 
-            call_Rcli();
+            printf("select option : \n\n");
+            printf("1) with humman\n");
+            printf("2) with bot\n\n");
+
+            fflush(stdout);
+            fflush(stdin);
+
+            switch (getchar()) {
+                case '1':
+                    system(cls);
+
+                    is_bot_on = 0;
+
+                    call_Rcli_gi();
+                    call_Rcli();
+                    ++player;
+                    change_player();
+                    call_Rcli();
+
+                    break;
+
+                case '2':
+                    system(cls);
+
+                    is_bot_on = 1;
+
+                    call_Rcli_gi();
+                    call_Rcli();
+                    ++player;
+                    change_player();
+                    call_Rcli();
+
+                    break;
+            }
+
             break;
 
         case '2':
             system(cls);
+
+            printf("select option : \n\n");
+            printf("1) with humman\n");
+            printf("2) with bot\n\n");
+
+            fflush(stdout);
+            fflush(stdin);
+
+            switch (getchar()) {
+                case '1':
+                    system(cls);
+
+                    is_bot_on = 0;
+
+                    break;
+
+                case '2':
+                    system(cls);
+
+                    is_bot_on = 1;
+
+                    break;
+            }
 
             show_save();
             break;

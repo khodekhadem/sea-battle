@@ -5,11 +5,15 @@
 
 #include "sb_globdef.h"
 
-extern void call_cli(int[], int);
+extern void call_cli(int[]);
 
 extern void call_engine(int *, int[]);
 
 extern void call_menu(void);
+
+extern void call_brain(int[]);
+
+extern void change_player(void);
 
 /*
     indexes , player info -> b_white , f_black
@@ -139,6 +143,8 @@ int main() {
     system("mkdir savefiles");
     system(cls);
 
+    srand((unsigned int) time(NULL));
+
     p[0]->bursting_ship_no = 0;
     p[1]->bursting_ship_no = 0;
 
@@ -149,7 +155,7 @@ int main() {
     p[1]->total_part - 0;
 
     // attacker + pos_of_attack_i + pos_of_attack_j + command -> 4 member
-    int cli_result[4] = {0, 0, 0, 0};
+    int gamer_result[4] = {0, 0, 0, 0};
     //bursting alert
     int engine_result = 1;
 
@@ -160,14 +166,49 @@ int main() {
 
     call_menu();
 
-    while (!is_ended) {
-        call_cli(cli_result, engine_result);
-        call_engine(&engine_result, cli_result);
-        main_print_board(cli_result[1], cli_result[2], engine_result);
+    player = 0;
+    last_player = 0;
 
-        sleep(1);
+    if (is_bot_on == 0) {
+        while (!is_ended) {
+            if (engine_result != 1) {
+                last_player = player;
+                ++player;
+                player %= 2;
+                change_player();
+            }
 
-        is_ended = check_end();
+            call_cli(gamer_result);
+            call_engine(&engine_result, gamer_result);
+            main_print_board(gamer_result[1], gamer_result[2], engine_result);
+
+            sleep(1);
+
+            is_ended = check_end();
+        }
+    }
+    else {
+        while (!is_ended) {
+            if (engine_result != 1) {
+                last_player = player;
+                ++player;
+                player %= 2;
+            }
+
+            if (player == 0) {
+                call_cli(gamer_result);
+                call_engine(&engine_result, gamer_result);
+                main_print_board(gamer_result[1], gamer_result[2], engine_result);
+
+                sleep(1);
+            }
+            else {
+                call_brain(gamer_result);
+                call_engine(&engine_result, gamer_result);
+            }
+
+            is_ended = check_end();
+        }
     }
 
     return 0;

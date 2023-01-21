@@ -153,13 +153,10 @@ void put_ship(int selector[][2], int len) {
     }
 
     ++ship_no;
-
-    last_player = player;
 }
 
 void selector_to_ships_places(int selector[][2], int len) {
     static int ship_no = 0;
-    static int last_player = 0;
     int i;
 
     if (player != last_player) {
@@ -177,8 +174,6 @@ void selector_to_ships_places(int selector[][2], int len) {
     ++ship_no;
 
     ++(p[player]->ship_number);
-
-    last_player = player;
 }
 
 int is_another_ship_available(int selector[][2], int len) {
@@ -271,63 +266,12 @@ int ship_creator() {
     }
 }
 
-void change_player() {
-    system(cls);
-
-    printf("PLEASE change player...");
-    fflush(stdout);
-
-    sleep(2);
-}
-
 void call_Rcli() {
     int _continue_selector;
 
-    printf("please write size of map (1 .. 52)\n");
-    scanf("%d", &board_size);
-
-    while (board_size < 1 || 52 < board_size) {
-        printf("%s!!!your number either lower than 1 or grather than 52 --- please write it again%s\n", f_orange,
-               color_reset);
-        scanf("%d", &board_size);
-
-        printf("%s%s", mv_cur_up, erase_line);
-        printf("%s%s", mv_cur_up, erase_line);
-    }
-
-    system(cls);
-
-    printf("please write repair number : \n");
-    scanf("%d", &repair_num);
-
-    system(cls);
-
-    printf("write player1 name (max = 19 character) : ");
-    scanf("%s", p1.name);
-    printf("\nwrite player2 name (max = 19 character) : ");
-    scanf("%s", p2.name);
-
-    system(cls);
-
-    printf("write max part of ships (max = 108 part) (your limit = must be less than %d) : ",
-           (board_size * board_size) / 4);
-    scanf("%d", &ship_part_number);
-    while (ship_part_number < 1 || ship_part_number > ((board_size * board_size) / 4)) {
-        printf("%s!!!your number is either less than 1 or more than limit%s\n", f_orange, color_reset);
-        scanf("%d", &ship_part_number);
-
-        printf("%s%s", mv_cur_up, erase_line);
-        printf("%s%s", mv_cur_up, erase_line);
-    }
-    if (ship_part_number > 108) {
-        p1.ship_number %= 108;
-    }
-
-    board_creator(p1.board);
-    board_creator(p2.board);
+    board_creator(p[player]->board);
 
     _continue_selector = 1;
-    player = 0;
     while (_continue_selector) {
         if (p[player]->total_part == ship_part_number) {
             break;
@@ -335,17 +279,5 @@ void call_Rcli() {
         _continue_selector = ship_creator();
     }
 
-    change_player();
-
-    _continue_selector = 1;
-    player = 1;
-    while (_continue_selector) {
-        if (p[player]->total_part == ship_part_number) {
-            break;
-        }
-        _continue_selector = ship_creator();
-    }
-
-    copy_2Dchar_array(52, 52, board_cpy[0], p1.board);
-    copy_2Dchar_array(52, 52, board_cpy[1], p2.board);
+    copy_2Dchar_array(52, 52, board_cpy[player], p[player]->board);
 }

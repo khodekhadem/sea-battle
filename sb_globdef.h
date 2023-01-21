@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
+#include <stdbool.h>
 
 // no. of columns = colN => arr[row][col] = *(arr + ((row * colN) + col))
 #define pos(arr, row, col, colN) (*(arr + ((row * colN) + col)))
@@ -85,8 +87,11 @@ extern int board_size;
 extern int repair_num;
 extern int ship_part_number;
 
+// 0 and 1
 extern int player;
 extern int last_player;
+
+extern int is_bot_on;
 
 extern char board_cpy[2][52][52];
 

@@ -29,6 +29,8 @@ int ship_part_number;
 int player = 0;
 int last_player = 0;
 
+int is_bot_on = 0;
+
 char board_cpy[2][52][52];
 
 struct player_info p1;

@@ -22,8 +22,6 @@ extern int exist_selector(int, int, int, int(*)[]);
 
 extern void move_selector(char, int(*)[], int);
 
-extern void change_player(void);
-
 extern void call_save(void);
 
 void cmd_returner(int cmd, char str[]) {
@@ -182,21 +180,9 @@ int proc_selector(int selector[][2]) {
 }
 
 //result : attacker + pos_of_attack_i + pos_of_attack_j + command
-void call_cli(int result[4], int burst_alert) {
+void call_cli(int result[4]) {
     int selector[1][2] = {{0, 0}};
     int command;
-
-    if (burst_alert != 1) {
-        last_player = player;
-        ++player;
-        player %= 2;
-    }
-
-    if (last_player != player) {
-        change_player();
-        last_player = player;
-    }
-
 
     command = proc_selector(selector);
 
