@@ -49,23 +49,26 @@ void show_save() {
 }
 
 void call_menu() {
+    int mode;
+
     printf("select option : \n\n");
     printf("1) new game\n");
     printf("2) load from save\n\n");
 
-    switch (getchar()) {
-        case '1':
+    scanf("%d", &mode);
+
+    switch (mode) {
+        case 1:
             system(cls);
 
             printf("select option : \n\n");
             printf("1) with humman\n");
             printf("2) with bot\n\n");
 
-            fflush(stdout);
-            fflush(stdin);
+            scanf("%d", &mode);
 
-            switch (getchar()) {
-                case '1':
+            switch (mode) {
+                case 1:
                     system(cls);
 
                     is_bot_on = 0;
@@ -78,7 +81,7 @@ void call_menu() {
 
                     break;
 
-                case '2':
+                case 2:
                     system(cls);
 
                     is_bot_on = 1;
@@ -94,25 +97,24 @@ void call_menu() {
 
             break;
 
-        case '2':
+        case 2:
             system(cls);
 
             printf("select option : \n\n");
             printf("1) with humman\n");
             printf("2) with bot\n\n");
 
-            fflush(stdout);
-            fflush(stdin);
+            scanf("%d", &mode);
 
-            switch (getchar()) {
-                case '1':
+            switch (mode) {
+                case 1:
                     system(cls);
 
                     is_bot_on = 0;
 
                     break;
 
-                case '2':
+                case 2:
                     system(cls);
 
                     is_bot_on = 1;
