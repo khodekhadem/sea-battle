@@ -30,6 +30,9 @@ int player = 0;
 int last_player = 0;
 
 int is_bot_on = 0;
+int is_online = 0;
+
+int player_number = 0;
 
 char board_cpy[2][52][52];
 

@@ -20,17 +20,10 @@ void call_Rcli_gi () {
 
     system(cls);
 
-    printf("write player1 name (max = 19 character) : ");
-    scanf("%s", p1.name);
-    printf("\nwrite player2 name (max = 19 character) : ");
-    scanf("%s", p2.name);
-
-    system(cls);
-
     printf("write max part of ships (max = 108 part) (your limit = must be less than %d) : ",
            (board_size * board_size) / 4);
     scanf("%d", &ship_part_number);
-    while (ship_part_number < 1 || ship_part_number > ((board_size * board_size) / 4)) {
+    while ((ship_part_number < 1) || (ship_part_number > ((board_size * board_size) / 4)) || (ship_part_number > 108)) {
         printf("%s!!!your number is either less than 1 or more than limit%s\n", f_orange, color_reset);
         scanf("%d", &ship_part_number);
 

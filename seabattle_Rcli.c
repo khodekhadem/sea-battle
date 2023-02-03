@@ -161,6 +161,8 @@ void selector_to_ships_places(int selector[][2], int len) {
 
     if (player != last_player) {
         ship_no = 0;
+
+        last_player = player;
     }
 
     for (i = 0; i < len; ++i) {
@@ -202,9 +204,25 @@ int ship_creator() {
     printf("(escape of add ship => enter 0 0) (remain = %d) : ", ship_part_number - p[player]->total_part);
 
     scanf("%d%d", &row, &col);
+
+    while (1) {
+        if ((row == 0 && col == 0) && (p[player]->ship_number == 0)) {
+            printf("%s!!!you must at least have 1 ship. write it again.%s\n", f_orange, color_reset);
+            scanf("%d%d", &row, &col);
+
+            printf("%s%s", mv_cur_up, erase_line);
+            printf("%s%s", mv_cur_up, erase_line);
+
+        }
+        else {
+            break;
+        }
+    }
+
     if (row == 0 && col == 0) {
         return 0;
     }
+
     while ((row * col) < 1 || (row * col) > 12 || (row > board_size) || (col > board_size) || (row < 1) || (col < 1)) {
         printf("%s!!!your numbers is incorrect. write it again.%s\n", f_orange, color_reset);
         scanf("%d%d", &row, &col);
@@ -268,6 +286,11 @@ int ship_creator() {
 
 void call_Rcli() {
     int _continue_selector;
+
+    printf("write player%d name (max = 19 character) : ", player + 1);
+    scanf("%s", p[player]->name);
+
+    system(cls);
 
     board_creator(p[player]->board);
 

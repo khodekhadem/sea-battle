@@ -58,6 +58,10 @@ int attack_on_ships(int attacker, int i_attack, int j_attack) {
         burst_place(defender, i_attack, j_attack);
         return 1;
     }
+    else if(p[defender]->board[i_attack][j_attack] == '~') {
+        p[defender]->board[i_attack][j_attack] = '&';
+    }
+
     return 0;
 }
 

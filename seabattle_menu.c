@@ -7,6 +7,10 @@ extern void call_Rcli_gi(void);
 
 extern void call_Rfile(const char *);
 
+extern void call_getServer(void);
+
+extern void call_sendServer(void);
+
 void change_player() {
     system(cls);
 
@@ -26,6 +30,8 @@ void show_save() {
 
     if (!dir) {
         printf(">> can't open directory");
+        sleep(1);
+        exit(0);
     }
 
     printf("select save : (q -> exit)\n\n");
@@ -53,7 +59,8 @@ void call_menu() {
 
     printf("select option : \n\n");
     printf("1) new game\n");
-    printf("2) load from save\n\n");
+    printf("2) load from save\n");
+    printf("3) online\n\n");
 
     scanf("%d", &mode);
 
@@ -72,6 +79,7 @@ void call_menu() {
                     system(cls);
 
                     is_bot_on = 0;
+                    is_online = 0;
 
                     call_Rcli_gi();
                     call_Rcli();
@@ -85,6 +93,7 @@ void call_menu() {
                     system(cls);
 
                     is_bot_on = 1;
+                    is_online = 0;
 
                     call_Rcli_gi();
                     call_Rcli();
@@ -111,6 +120,7 @@ void call_menu() {
                     system(cls);
 
                     is_bot_on = 0;
+                    is_online = 0;
 
                     break;
 
@@ -118,11 +128,50 @@ void call_menu() {
                     system(cls);
 
                     is_bot_on = 1;
+                    is_online = 0;
 
                     break;
             }
 
             show_save();
+            break;
+
+        case 3:
+            system(cls);
+
+            is_bot_on = 0;
+            is_online = 1;
+
+            system(cls);
+
+            printf("select option : \n\n");
+            printf("1) create\n");
+            printf("2) join\n\n");
+
+            scanf("%d", &mode);
+
+            switch (mode) {
+                case 1:
+                    player_number = 0;
+
+                    call_Rcli_gi();
+                    call_Rcli();
+                    ++player;
+                    change_player();
+                    call_sendServer();
+                    call_getServer();
+
+                    break;
+                case 2:
+                    player_number =1;
+
+                    call_getServer();
+                    call_Rcli();
+                    call_sendServer();
+
+                    break;
+            }
+
             break;
     }
 }

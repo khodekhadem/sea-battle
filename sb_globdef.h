@@ -92,6 +92,9 @@ extern int player;
 extern int last_player;
 
 extern int is_bot_on;
+extern int is_online;
+
+extern int player_number;
 
 extern char board_cpy[2][52][52];
 

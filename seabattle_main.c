@@ -15,6 +15,10 @@ extern void call_brain(int[]);
 
 extern void change_player(void);
 
+extern void call_getServer(void);
+
+extern void call_sendServer(void);
+
 /*
     indexes , player info -> b_white , f_black
     water -> b_blue , f_darkblue
@@ -91,6 +95,9 @@ void main_print_board(int attack_i, int attack_j, int status) {
                 if (p[_player]->board[i][j_temp] == '~') {
                     printf("%s%s~ %s", b_blue, f_darkblue, color_reset);
                 }
+                else if(p[_player]->board[i][j_temp] == '&'){
+                    printf("%s%s~ %s", b_blue, f_darkblue, color_reset);
+                }
                 else if (p[_player]->board[i][j_temp] == 'X') {
                     printf("%s%sX %s", b_darkred, f_darkred, color_reset);
                 }
@@ -121,7 +128,8 @@ int check_end() {
     if (p1.ship_number == 0) {
         system(cls);
 
-        printf("Hey %s, You Lose hahaha :)", p1.name);
+        printf("Hey *%s*, You Win hahaha :)\n\n", p2.name);
+        printf("Hey *%s*, You Lose hahaha :)", p1.name);
         sleep(2);
 
         return 1;
@@ -130,7 +138,8 @@ int check_end() {
     if (p2.ship_number == 0) {
         system(cls);
 
-        printf("Hey %s, You Lose hahaha :)", p2.name);
+        printf("Hey *%s*, You Win hahaha :)\n\n", p1.name);
+        printf("Hey *%s*, You Lose hahaha :)", p2.name);
         sleep(2);
 
         return 1;
@@ -141,6 +150,7 @@ int check_end() {
 
 int main() {
     system("mkdir savefiles");
+    system("mkdir onlineconfig");
     system(cls);
 
     srand((unsigned int) time(NULL));
@@ -152,7 +162,7 @@ int main() {
     p[1]->ship_number = 0;
 
     p[0]->total_part = 0;
-    p[1]->total_part - 0;
+    p[1]->total_part = 0;
 
     // attacker + pos_of_attack_i + pos_of_attack_j + command -> 4 member
     int gamer_result[4] = {0, 0, 0, 0};
@@ -168,6 +178,32 @@ int main() {
 
     player = 0;
     last_player = 0;
+
+    if (is_online == 1) {
+        while (!is_ended) {
+            if (engine_result != 1) {
+                last_player = player;
+                ++player;
+                player %= 2;
+                change_player();
+            }
+
+            if (player == player_number) {
+                call_cli(gamer_result);
+                call_engine(&engine_result, gamer_result);
+                main_print_board(gamer_result[1], gamer_result[2], engine_result);
+
+                sleep(1);
+
+                is_ended = check_end();
+            }
+            else {
+                engine_result = 1;
+                call_sendServer();
+                call_getServer();
+            }
+        }
+    }
 
     if (is_bot_on == 0) {
         while (!is_ended) {

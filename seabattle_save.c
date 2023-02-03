@@ -35,7 +35,7 @@ void call_save() {
     fwrite(&last_player, sizeof(int), 1, savefile);
     fwrite(&repair_num, sizeof(int), 1, savefile);
     fwrite(&ship_part_number, sizeof(int), 1, savefile);
-    fwrite(board_cpy, sizeof(char[2][52][52]), 2, savefile);
+    fwrite(board_cpy, sizeof(char[2][52][52]), 1, savefile);
 
     fclose(savefile);
 

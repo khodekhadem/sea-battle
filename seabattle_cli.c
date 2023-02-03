@@ -93,6 +93,9 @@ void cli_print_board(int selector[][2], int command) {
                 if (p[_player]->board[i][j_temp] == '~') {
                     printf("%s%s~ %s", b_blue, f_darkblue, color_reset);
                 }
+                if (p[_player]->board[i][j_temp] == '&') {
+                    printf("%s%s~ %s", b_blue, f_darkblue, color_reset);
+                }
                 else if (p[_player]->board[i][j_temp] == 'X') {
                     printf("%s%sX %s", b_darkred, f_darkred, color_reset);
                 }
