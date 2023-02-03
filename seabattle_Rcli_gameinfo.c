@@ -22,15 +22,15 @@ void call_Rcli_gi () {
 
     printf("write max part of ships (max = 108 part) (your limit = must be less than %d) : ",
            (board_size * board_size) / 4);
-    scanf("%d", &ship_part_number);
-    while ((ship_part_number < 1) || (ship_part_number > ((board_size * board_size) / 4)) || (ship_part_number > 108)) {
+    scanf("%d", &max_part);
+    while ((max_part < 1) || (max_part > ((board_size * board_size) / 4)) || (max_part > 108)) {
         printf("%s!!!your number is either less than 1 or more than limit%s\n", f_orange, color_reset);
-        scanf("%d", &ship_part_number);
+        scanf("%d", &max_part);
 
         printf("%s%s", mv_cur_up, erase_line);
         printf("%s%s", mv_cur_up, erase_line);
     }
-    if (ship_part_number > 108) {
+    if (max_part > 108) {
         p1.ship_number %= 108;
     }
 }

@@ -27,7 +27,7 @@ void call_sendServer(){
     fwrite(&player, sizeof(int), 1, serverfile);
     fwrite(&last_player, sizeof(int), 1, serverfile);
     fwrite(&repair_num, sizeof(int), 1, serverfile);
-    fwrite(&ship_part_number, sizeof(int), 1, serverfile);
+    fwrite(&max_part, sizeof(int), 1, serverfile);
     fwrite(board_cpy, sizeof(char[2][52][52]), 1, serverfile);
 
     fclose(serverfile);

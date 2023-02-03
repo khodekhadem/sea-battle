@@ -12,10 +12,10 @@
     ship -> 1 .. 9
 */
 
-void copy_2Dchar_array(int row, int coln, char *dest_arr, char *scr_arr) {
+void copy_2Dchar_array(int row, int col, char *dest_arr, char *scr_arr) {
     for (int i = 0; i < row; ++i) {
-        for (int j = 0; j < coln; ++j) {
-            pos(dest_arr, i, j, coln) = pos(scr_arr, i, j, coln);
+        for (int j = 0; j < col; ++j) {
+            pos(dest_arr, i, j, col) = pos(scr_arr, i, j, col);
         }
     }
 }
@@ -201,7 +201,7 @@ int ship_creator() {
 
     printf("%s%s%s%s\n\n", b_white, f_black, p[player]->name, color_reset);
     printf("write row and col of your ship (max part = 12) (e.g. 2 3 for 2*3)\n");
-    printf("(escape of add ship => enter 0 0) (remain = %d) : ", ship_part_number - p[player]->total_part);
+    printf("(escape of add ship => enter 0 0) (remain = %d) : ", max_part - p[player]->total_part);
 
     scanf("%d%d", &row, &col);
 
@@ -230,7 +230,7 @@ int ship_creator() {
         printf("%s%s", mv_cur_up, erase_line);
         printf("%s%s", mv_cur_up, erase_line);
     }
-    while ((row * col) + p[player]->total_part > ship_part_number) {
+    while ((row * col) + p[player]->total_part > max_part) {
         printf("%s!!!parts over limit%s\n", f_orange, color_reset);
         scanf("%d%d", &row, &col);
 
@@ -296,7 +296,7 @@ void call_Rcli() {
 
     _continue_selector = 1;
     while (_continue_selector) {
-        if (p[player]->total_part == ship_part_number) {
+        if (p[player]->total_part == max_part || p[player]->ship_number == 9) {
             break;
         }
         _continue_selector = ship_creator();

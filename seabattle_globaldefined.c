@@ -24,7 +24,7 @@ int is_ended = 0;
 
 int board_size;
 int repair_num;
-int ship_part_number;
+int max_part;
 
 int player = 0;
 int last_player = 0;

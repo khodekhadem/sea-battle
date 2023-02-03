@@ -3,6 +3,8 @@
 
 extern void call_Rcli(void);
 
+extern void call_Rbrain(void);
+
 extern void call_Rcli_gi(void);
 
 extern void call_Rfile(const char *);
@@ -99,7 +101,7 @@ void call_menu() {
                     call_Rcli();
                     ++player;
                     change_player();
-                    call_Rcli();
+                    call_Rbrain();
 
                     break;
             }

@@ -85,7 +85,7 @@ extern int is_ended;
 
 extern int board_size;
 extern int repair_num;
-extern int ship_part_number;
+extern int max_part;
 
 // 0 and 1
 extern int player;

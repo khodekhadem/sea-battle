@@ -29,7 +29,7 @@ void call_Rfile(const char savefile_path[]) {
     fread(&player, sizeof(int), 1, savefile);
     fread(&last_player, sizeof(int), 1, savefile);
     fread(&repair_num, sizeof(int), 1, savefile);
-    fread(&ship_part_number, sizeof(int), 1, savefile);
+    fread(&max_part, sizeof(int), 1, savefile);
     fread(board_cpy, sizeof(char[2][52][52]), 1, savefile);
 
     fclose(savefile);
