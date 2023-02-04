@@ -1,4 +1,6 @@
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 void upload(){
     system("ftp -n < ~/sea-battle/ftpc/ftp-upload"); 
 
@@ -17,9 +19,7 @@ void cal_download(){
 }
 
 int main(){
-cal_download();
-
+    return 0;
 }
-
 
 

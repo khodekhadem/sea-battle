@@ -4,12 +4,11 @@ extern void call_upload(char *);
 
 void call_sendServer(){
     FILE *serverfile;
-    char path[50] = "onlineconfig\\me.bin";
 
-#ifdef __linux__
-#if __linux__
-    path[9] = '/';
-#endif
+#if WIN32
+    char *path = "onlineconfig\\online_data.bin";
+#elif __linux__
+    char *path = "onlineconfig/online_data.bin";
 #endif
 
     serverfile = fopen(path, "wb");
