@@ -1,0 +1,45 @@
+---
+  - name: ftp
+    hosts: myftpserver
+    become: yes
+    become_method: sudo
+    #become_password: ansible1234 
+    vars:
+        ansible_become_pass: ansible1234
+    tasks:
+        - name : apt update 
+          apt:
+            update_cache: yes
+            #cache_valid_time: 86400 #One day
+          when: ansible_facts['os_family'] == 'Debian'
+        - name : is there tree ?
+          apt:
+            name: "{{ item }}"
+            state: present
+          with_items:
+            - vim
+            - python3-pip
+            - git
+            - curl
+            - net-tools
+            - vsftpd
+            - python3
+          when: ansible_facts['os_family'] == 'Debian'
+
+        - name: config ftp put
+          ansible.builtin.lineinfile:
+            path: /etc/vsftpd.conf
+            search_string: '#write_enable=YES'
+            line: 'write_enable=YES'
+            owner: root
+            group: root
+            mode: '0644'
+
+
+        - name: restart ftp 
+          command: "systemctl restart vsftpd.service"
+ 
+
+
+
+
