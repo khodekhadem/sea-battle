@@ -5,7 +5,6 @@ typedef char Byte;
 extern void call_download(void);
 
 int call_dataAvailable(){
-    int is_same;
     static int turn = 0;
     Byte f_data;
     Byte fold_data;
