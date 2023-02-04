@@ -1,11 +1,11 @@
 #include<stdio.h>
 void upload(){
-    sytem("ftp -n < ~/sea-battle/ftpc/upload"); 
+    system("ftp -n < ~/sea-battle/ftpc/ftp-upload"); 
 
 
 }
 void download(){
-    sytem("ftp -n < ~/sea-battle/ftpc/download"); 
+    system("ftp -n < ~/sea-battle/ftpc/ftp-download"); 
 
 }
 
@@ -16,6 +16,10 @@ void cal_download(){
     download();
 }
 
+int main(){
+cal_download();
+
+}
 
 
 

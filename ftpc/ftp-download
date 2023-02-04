@@ -1,5 +1,5 @@
  open 192.168.1.39
  user ansible ansible1234
- get save
+ get  save 
  bye
 
