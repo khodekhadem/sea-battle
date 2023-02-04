@@ -21,7 +21,9 @@ int call_dataAvailable(){
 
     sleep(1);
 
-    call_download();
+    do {
+        call_download();
+    } while (!fopen(path,"rb"));
 
     if (turn == 0) {
         system(cmd);
