@@ -149,8 +149,8 @@ int check_end() {
 }
 
 int main() {
-//    system("mkdir savefiles");
-//    system("mkdir onlineconfig");
+    system("mkdir savefiles");
+    system("mkdir onlineconfig");
     system(cls);
 
     srand((unsigned int) time(NULL));
