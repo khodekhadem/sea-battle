@@ -19,6 +19,8 @@ int call_dataAvailable(){
     char *old_path = "onlineconfig/old_online_data.bin";
 #endif
 
+    sleep(1);
+
     call_download();
 
     if (turn == 0) {

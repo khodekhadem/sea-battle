@@ -84,7 +84,9 @@ void call_menu() {
                     is_online = 0;
 
                     call_Rcli_gi();
+
                     system(cls);
+
                     call_Rcli();
                     ++player;
                     change_player();
@@ -99,7 +101,9 @@ void call_menu() {
                     is_online = 0;
 
                     call_Rcli_gi();
+
                     system(cls);
+
                     call_Rcli();
                     ++player;
                     change_player();
@@ -146,8 +150,6 @@ void call_menu() {
             is_bot_on = 0;
             is_online = 1;
 
-            system(cls);
-
             printf("select option : \n\n");
             printf("1) create\n");
             printf("2) join\n\n");
@@ -158,8 +160,12 @@ void call_menu() {
                 case 1:
                     player_number = 0;
 
-                    call_Rcli_gi();
                     system(cls);
+
+                    call_Rcli_gi();
+
+                    system(cls);
+
                     call_Rcli();
                     ++player;
                     change_player();
@@ -170,6 +176,9 @@ void call_menu() {
                 case 2:
                     player_number =1;
 
+                    system(cls);
+
+                    printf("please wait ...");
                     call_getServer();
                     call_Rcli();
                     call_sendServer();
