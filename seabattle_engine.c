@@ -12,7 +12,7 @@
 
 void burst_place(int defender, int i, int j) {
     // first char to num then change 1 -> 0 and 2 -> 1 and ... for array indexing
-    int ship_no = p[defender]->board[i][j] - 48 - 1;
+    int ship_no = p[defender]->board[i][j] - 49;
     int all_bursted = 1;
     int k = 0;
     int temp1, temp2;

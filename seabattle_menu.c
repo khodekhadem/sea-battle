@@ -84,6 +84,7 @@ void call_menu() {
                     is_online = 0;
 
                     call_Rcli_gi();
+                    system(cls);
                     call_Rcli();
                     ++player;
                     change_player();
@@ -98,6 +99,7 @@ void call_menu() {
                     is_online = 0;
 
                     call_Rcli_gi();
+                    system(cls);
                     call_Rcli();
                     ++player;
                     change_player();
@@ -157,6 +159,7 @@ void call_menu() {
                     player_number = 0;
 
                     call_Rcli_gi();
+                    system(cls);
                     call_Rcli();
                     ++player;
                     change_player();
