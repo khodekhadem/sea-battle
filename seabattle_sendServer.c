@@ -1,6 +1,6 @@
 #include "sb_globdef.h"
 
-extern void call_upload(char *);
+extern void call_upload();
 
 void call_sendServer(){
     FILE *serverfile;
@@ -31,5 +31,5 @@ void call_sendServer(){
 
     fclose(serverfile);
 
-    call_upload(path);
+    call_upload();
 }

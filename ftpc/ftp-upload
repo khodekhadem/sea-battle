@@ -1,5 +1,5 @@
- open <ip>
- user <user> <password>
+ open 192.168.43.101
+ user ansible ansible1234
  put online_data
  bye
 
