@@ -19,9 +19,9 @@ int call_dataAvailable(){
     char *old_path = "onlineconfig/old_online_data.bin";
 #endif
 
-    sleep(1);
-
     do {
+        sleep(1);
+
         call_download();
     } while (!fopen(path,"rb"));
 
@@ -41,6 +41,8 @@ int call_dataAvailable(){
             system(cmd);
             turn = 1;
 
+            system(cls);
+
             return 0;
         }
 
@@ -50,6 +52,8 @@ int call_dataAvailable(){
 
     system(cmd);
     turn = 1;
+
+    system(cls);
 
     return 1;
 }
