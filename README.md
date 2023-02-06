@@ -39,7 +39,7 @@ use this command
 on it. another notice if you don't want to use your android device as ftp server you must use a __linux__
 device for ftp server.
 2. after setup ftp server, you must change files ftp-download, ftp-upload, WINftp-download and WINftp-upload in ftpc folder as shown in these files.
-3. before start the game, you must upload conf_online_data.bin (with name online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
+3. before start the game, you must upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
     ```
    WINDOWS:
