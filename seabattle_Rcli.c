@@ -287,7 +287,7 @@ int ship_creator() {
 void call_Rcli() {
     int _continue_selector;
 
-    printf("write player%d name (max = 19 character) : ", player + 1);
+    printf("write player%d name (max = 19 character) : ", (player + 1));
     scanf("%s", p[player]->name);
 
     system(cls);

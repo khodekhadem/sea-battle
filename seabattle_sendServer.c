@@ -1,6 +1,6 @@
 #include "sb_globdef.h"
 
-extern void call_upload();
+extern void call_upload(char *);
 
 void call_sendServer(){
     FILE *serverfile;
@@ -19,6 +19,9 @@ void call_sendServer(){
         exit(0);
     }
 
+    ++file_version;
+
+    fwrite(&file_version, sizeof(int), 1, serverfile);
     fwrite(&p1, sizeof(struct player_info), 1, serverfile);
     fwrite(&p2, sizeof(struct player_info), 1, serverfile);
     fwrite(&is_ended, sizeof(int), 1, serverfile);
@@ -31,5 +34,5 @@ void call_sendServer(){
 
     fclose(serverfile);
 
-    call_upload();
+    call_upload(path);
 }

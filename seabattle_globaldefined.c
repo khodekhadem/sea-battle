@@ -34,6 +34,8 @@ int is_online = 0;
 
 int player_number = 0;
 
+int file_version = 0;
+
 char board_cpy[2][52][52];
 
 struct player_info p1;

@@ -21,6 +21,9 @@ void call_getServer(){
         exit(0);
     }
 
+    system(cls);
+
+    fread(&file_version, sizeof(int), 1, serverfile);
     fread(&p1, sizeof(struct player_info), 1, serverfile);
     fread(&p2, sizeof(struct player_info), 1, serverfile);
     fread(&is_ended, sizeof(int), 1, serverfile);

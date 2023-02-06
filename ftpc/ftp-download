@@ -1,5 +1,5 @@
- open 192.168.43.101
- user ansible ansible1234
- get  online_data
+ open <ip> <port>
+ user <username> <password>
+ get  ./online_data.bin onlineconfig/online_data.bin
  bye
 

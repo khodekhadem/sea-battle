@@ -96,6 +96,8 @@ extern int is_online;
 
 extern int player_number;
 
+extern int file_version;
+
 extern char board_cpy[2][52][52];
 
 extern struct player_info p1;

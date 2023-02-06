@@ -20,6 +20,7 @@ void change_player() {
     fflush(stdout);
 
     sleep(2);
+    system(cls);
 }
 
 void show_save() {
@@ -103,7 +104,7 @@ void call_menu() {
                     call_Rcli_gi();
 
                     system(cls);
-
+                    
                     call_Rcli();
                     ++player;
                     change_player();
@@ -163,12 +164,11 @@ void call_menu() {
                     system(cls);
 
                     call_Rcli_gi();
-
+                    
                     system(cls);
 
                     call_Rcli();
                     ++player;
-                    change_player();
                     call_sendServer();
                     call_getServer();
 
@@ -178,7 +178,6 @@ void call_menu() {
 
                     system(cls);
 
-                    printf("please wait ...");
                     call_getServer();
                     call_Rcli();
                     call_sendServer();

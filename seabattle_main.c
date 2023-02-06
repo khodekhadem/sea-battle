@@ -185,7 +185,8 @@ int main() {
                 last_player = player;
                 ++player;
                 player %= 2;
-                change_player();
+
+                call_sendServer();
             }
 
             if (player == player_number) {
@@ -194,15 +195,17 @@ int main() {
                 main_print_board(gamer_result[1], gamer_result[2], engine_result);
 
                 sleep(1);
-
-                is_ended = check_end();
             }
             else {
                 engine_result = 1;
-                call_sendServer();
+                system(cls);
                 call_getServer();
             }
+
+            is_ended = check_end();
         }
+
+        call_sendServer();
     }
 
     if (is_bot_on == 0) {

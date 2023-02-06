@@ -1,0 +1,5 @@
+open <ip> <port>
+<username>
+<password>
+get ./online_data.bin onlineconfig\online_data.bin
+quit

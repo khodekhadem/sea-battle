@@ -2,9 +2,9 @@
 
 void call_upload(){
 #if WIN32
-    char *cmd = "ftp -n < ftpc\\ftp-upload";
+    char *cmd = "ftp -s:.\\ftpc\\WINftp-upload.txt";
 #elif __linux__
-    char *cmd = "ftp -n < ftpc/ftp-upload";
+    char *cmd = "pftp -n < ftpc/ftp-upload";
 #endif
 
     system(cmd);
@@ -12,9 +12,9 @@ void call_upload(){
 
 void call_download(){
 #if WIN32
-    char *cmd = "ftp -n < ftpc\\ftp-download";
+    char *cmd = "ftp -s:.\\ftpc\\WINftp-download.txt";
 #elif __linux__
-    char *cmd = "ftp -n < ftpc/ftp-download";
+    char *cmd = "pftp -n < ftpc/ftp-download";
 #endif
 
     system(cmd);
