@@ -35,10 +35,19 @@ use this command
     ./seabattle
 
 # notice about network
-1. for online gaming you must have an ftp server. for this, we recommend you to use your android device and install an ftp server app
-on it. but if you don't want to use your android device as an ftp server you must use a __linux__
-device for ftp server.
-2. after setup of ftp server, you must change files ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc folder as shown in these files.
+1. for online gaming you need to config your server with ansible , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
+
+    cd ansible
+
+    cp hosts /etc/ansible/hosts
+
+now you can run my ansible playbook with this command
+   
+   ansible-playbook ftp.yml
+
+your server will be configed automatically 
+
+2. after setting up your  ftp server, you must change files ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc folder as shown in these files.
 3. before start the game, you must upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
     ```
