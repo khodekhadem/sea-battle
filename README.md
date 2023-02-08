@@ -49,24 +49,24 @@ your server will be configed automatically
 
 2.after setting up your server, you have to edit  ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc directory.
 
-3.1 before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
+3. before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
     ```
-    WINDOWS:
-    
-    > ftp <ip> <port>
-    > <username>
-    > <password>
-    > put .\conf_online_data.bin ./online_data.bin
-    ```
-    ```
-    LINUX:
+   WINDOWS:
    
-    $ ftp <ip> <port>
-    $ <username>
-    $ <password>
-    $ put ./conf_online_data.bin ./online_data.bin
-    ```
+   > ftp <ip> <port>
+   > <username>
+   > <password>
+   > put .\conf_online_data.bin ./online_data.bin
+   ```
+   ```
+   LINUX:
+   
+   $ ftp <ip> <port>
+   $ <username>
+   $ <password>
+   $ put ./conf_online_data.bin ./online_data.bin
+   ```
 4.if you use linux , run this command in temrinal
 
     ls -ltrh /bin | grep pftp
