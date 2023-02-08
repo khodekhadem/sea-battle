@@ -35,7 +35,18 @@ use this command
     ./seabattle
 
 # notice about online gaming
-1.for online gaming you need to config your  linux server with ansible , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
+for online gaming you have two option, using docker or config your  linux server with my ansible playbook
+1.docker
+you can cd to docker directory and make your container with these commands
+    
+    cd docker
+    docker compose up
+ if you want to get into the container and change configurations, i recommend to use my Dockerfile to build your image
+    
+    cd docker
+    docker build -t vsftpim ./
+    
+1.for online gaming you have two option, using docker or config your  linux server with my ansible playbook , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
 
     cd ansible
 
