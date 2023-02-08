@@ -36,17 +36,28 @@ use this command
 
 # notice about online gaming
 for online gaming you have two option, using docker or config your  linux server with my ansible playbook
+
 1.docker
-you can cd to docker directory and make your container with these commands
+
+1.1 you can cd to docker directory and make your container with these commands
     
     cd docker
     docker compose up
- if you want to get into the container and change configurations, i recommend to use my Dockerfile to build your image
     
-    cd docker
-    docker build -t vsftpim ./
+1.2 if you want to get into the container and change configurations, i recommend you to use my Dockerfile to build your image
     
-1.for online gaming you have two option, using docker or config your  linux server with my ansible playbook , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
+      cd docker
+      docker build -t vsftpim ./
+  and run it with
+      
+      docker run -d -p 20:20 -p 21:21 -p 21100-21110:21100-21110 \
+      -e FTP_USER=ansible -e FTP_PASS=ansible1234 \
+      -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
+      --name vsftpd  --restart=always fauria/vsftpd
+
+2.ansible
+
+config your linux server with my ansible playbook , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
 
     cd ansible
 
@@ -58,9 +69,10 @@ now you can run my ansible playbook with this command
 
 your server will be configed automatically 
 
-2.after setting up your server, you have to edit  ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc directory.
 
-3.before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
+after setting up your server, you have to edit  ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc directory.
+
+before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
    ```
   WINDOWS:
@@ -78,7 +90,7 @@ your server will be configed automatically
   $ <password>
   $ put ./conf_online_data.bin ./online_data.bin
   ```
-4.if you use linux , run this command in temrinal
+if you use linux , run this command in temrinal
 
     ls -ltrh /bin | grep pftp
 if you dont have any output you should edit seabattle_ftp.c and change
