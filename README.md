@@ -68,6 +68,7 @@ your server will be configed automatically
    $ put ./conf_online_data.bin ./online_data.bin
    ```
 4.if you use linux , run this command in temrinal
+
     ls -ltrh /bin | grep pftp
 if you dont have any output you should edit seabattle_ftp.c and change
    
