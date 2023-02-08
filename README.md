@@ -28,7 +28,7 @@ then, move to the directory
 compile the sources
 
     gcc -Wall sb_globdef.h s* -o seabattle
-
+    gcc
 # run
 use this command
 
