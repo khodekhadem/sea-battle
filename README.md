@@ -39,6 +39,8 @@ use this command
 
     cd ansible
 
+
+
     cp hosts /etc/ansible/hosts
 
 now you can run my ansible playbook with this command
