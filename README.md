@@ -35,7 +35,7 @@ use this command
     ./seabattle
 
 # notice about network
-1. for online gaming you need to config your server with ansible , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
+1.for online gaming you need to config your server with ansible , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
 
     cd ansible
 
@@ -43,7 +43,7 @@ use this command
 
 now you can run my ansible playbook with this command
    
-   ansible-playbook ftp.yml
+    ansible-playbook ftp.yml
 
 your server will be configed automatically 
 
