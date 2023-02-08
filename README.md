@@ -51,22 +51,22 @@ your server will be configed automatically
 
 3.1 before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
+     ```
+    WINDOWS:
+    
+    > ftp <ip> <port>
+    > <username>
+    > <password>
+    > put .\conf_online_data.bin ./online_data.bin
     ```
-   WINDOWS:
+    ```
+    LINUX:
    
-   > ftp <ip> <port>
-   > <username>
-   > <password>
-   > put .\conf_online_data.bin ./online_data.bin
-   ```
-   ```
-   LINUX:
-   
-   $ ftp <ip> <port>
-   $ <username>
-   $ <password>
-   $ put ./conf_online_data.bin ./online_data.bin
-   ```
+    $ ftp <ip> <port>
+    $ <username>
+    $ <password>
+    $ put ./conf_online_data.bin ./online_data.bin
+    ```
 4.if you use linux , run this command in temrinal
 
     ls -ltrh /bin | grep pftp
