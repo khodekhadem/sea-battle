@@ -34,10 +34,10 @@ use this command
 
     ./seabattle
 
-# notice about online gaming
+# online gaming
 for online gaming you have two option, using docker or config your  linux server with my ansible playbook
 
-1.docker
+1.DOCKER
 
 1.1 you can cd to docker directory and make your container with these commands
     
@@ -46,18 +46,18 @@ for online gaming you have two option, using docker or config your  linux server
     
 1.2 if you want to get into the container and change configurations, i recommend you to use my Dockerfile to build your image
     
-      cd docker
-      docker build -t vsftpim ./
-  and run it with
+    cd docker
+    docker build -t vsftpim ./
+and run it with
       
-      docker run -d -p 20:20 -p 21:21 -p 21100-21110:21100-21110 \
-      -e FTP_USER=ansible -e FTP_PASS=ansible1234 \
-      -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
-      --name vsftpd  --restart=always fauria/vsftpd
+    docker run -d -p 20:20 -p 21:21 -p 21100-21110:21100-21110 \
+    -e FTP_USER=ansible -e FTP_PASS=ansible1234 \
+    -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
+    --name vsftpd  --restart=always fauria/vsftpd
 
-2.ansible
+2.ANSIBLE
 
-config your linux server with my ansible playbook , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
+you can config your linux server with my ansible playbook , edit ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
 
     cd ansible
 
@@ -71,6 +71,7 @@ your server will be configed automatically
 
 
 after setting up your server, you have to edit  ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc directory.
+*remmember if you havent changed my config files your username will be ansible and your pass will be ansible1234 and your port in 21
 
 before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
