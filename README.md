@@ -76,7 +76,7 @@ if you dont have any output you should edit seabattle_ftp.c and change
 
 with
 
-    ftp -n
+    ftp -p
 # Additional Information
 This project is an academic(university) project in a two-person group with accounts
 1. www.github.com/khodekhadem
