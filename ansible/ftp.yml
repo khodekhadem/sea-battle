@@ -12,7 +12,14 @@
             update_cache: yes
             #cache_valid_time: 86400 #One day
           when: ansible_facts['os_family'] == 'Debian'
-        - name : is there tree ?
+
+        - name : yum update 
+          yum:
+            update_cache: yes
+            #cache_valid_time: 86400 #One day
+          when: ansible_facts['os_family'] == 'RedHat'
+
+        - name : is there tree apt ?
           apt:
             name: "{{ item }}"
             state: present
@@ -25,6 +32,20 @@
             - vsftpd
             - python3
           when: ansible_facts['os_family'] == 'Debian'
+
+        - name : is there tree yum ?
+          apt:
+            name: "{{ item }}"
+            state: present
+          with_items:
+            - vim
+            - python3-pip
+            - git
+            - curl
+            - net-tools
+            - vsftpd
+            - python3
+          when: ansible_facts['os_family'] == 'RedHat'
 
         - name: config ftp put
           ansible.builtin.lineinfile:
