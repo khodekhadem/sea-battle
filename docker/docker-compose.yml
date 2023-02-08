@@ -1,0 +1,17 @@
+version: "3.2"
+
+services:
+
+  vsftpd:
+    image: fauria/vsftpd
+    container_name: vsftpdcont
+    environment:
+      - FTP_USER=ansible
+      - FTP_PASS=ansible1234
+    ports:
+      - 20:20
+      - 21:21
+
+
+    restart: always
+
