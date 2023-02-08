@@ -34,8 +34,8 @@ use this command
 
     ./seabattle
 
-# notice about network
-1.for online gaming you need to config your server with ansible , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
+# notice about online gaming
+1.for online gaming you need to config your  linux server with ansible , change ansible/hosts with your server ip and use this command to copy file to /etc/ansible/hosts
 
     cd ansible
 
@@ -66,7 +66,12 @@ your server will be configed automatically
    $ <password>
    $ put ./conf_online_data.bin ./online_data.bin
    ```
-   
+4.if you use linux , run this command in temrinal
+    ls -ltrh /bin | grep pftp
+if you dont have any output you should edit seabattle_ftp.c and change
+    pftp
+with
+    ftp -n
 # Additional Information
 This project is an academic(university) project in a two-person group with accounts
 1. www.github.com/khodekhadem
