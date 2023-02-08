@@ -51,7 +51,7 @@ your server will be configed automatically
 
 3.1 before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
-     ```
+    ```
     WINDOWS:
     
     > ftp <ip> <port>
