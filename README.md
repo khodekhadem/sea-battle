@@ -47,7 +47,8 @@ now you can run my ansible playbook with this command
 
 your server will be configed automatically 
 
-2. after setting up your server, you have to edit  ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc directory.
+2.after setting up your server, you have to edit  ftp-download, ftp-upload, WINftp-download.txt and WINftp-upload.txt in ftpc directory.
+
 3. before start the game, you have to upload conf_online_data.bin (in name of online_data.bin in ftp server) to your ftp server. for this, you must use below commands.<br><br>
     
     ```
@@ -69,8 +70,11 @@ your server will be configed automatically
 4.if you use linux , run this command in temrinal
     ls -ltrh /bin | grep pftp
 if you dont have any output you should edit seabattle_ftp.c and change
+   
     pftp
+
 with
+
     ftp -n
 # Additional Information
 This project is an academic(university) project in a two-person group with accounts
